@@ -50,22 +50,21 @@
                 for lang in guess-language-regexps
                 for regexp = (cdr lang)
                 collect (cons (car lang) (how-many regexp beginning end)))))
-    (print tally)
     (car (--max-by (> (cdr it) (cdr other)) tally))))
 
 (defun guess-language-buffer ()
   (interactive)
-  (print (guess-language (point-min) (point-max))))
+  (guess-language (point-min) (point-max)))
 
 (defun guess-language-paragraph ()
   (interactive)
   (let ((beginning (save-excursion (backward-paragraph) (point)))
         (end       (save-excursion (forward-paragraph) (point))))
-    (print (guess-language beginning end))))
+    (guess-language beginning end)))
 
 (defun guess-language-region ()
   (interactive)
-  (print (guess-language (region-beginning) (region-end))))
+  (guess-language (region-beginning) (region-end)))
 
 (defun guess-language-autoset ()
   "Detects language of the current paragraph and sets things like
@@ -77,9 +76,23 @@ ispell dictionaries accordingly."
            (typo-change-language "English")))
     ('de (progn
            (ispell-change-dictionary "de")
-           (typo-change-language "German"))))
-  (flyspell-region (save-excursion (backward-paragraph) (point))
-                   (save-excursion (forward-paragraph) (point))))
+           (typo-change-language "German")))))
+
+(defun guess-language-autoset-and-spellcheck (beginning end doublon)
+  "Runs `guess-language-autoset' and then the flyspell on the
+current paragraph."
+  (let ((old-dictionary ispell-local-dictionary))
+    (guess-language-autoset)
+    (unless (string= old-dictionary ispell-local-dictionary)
+      (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
+      (flyspell-region (save-excursion (backward-paragraph) (point))
+                       (save-excursion (forward-paragraph) (point)))
+      (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck))))
+
+(add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
+
+(setq flyspell-issue-welcome-flag nil)
+(setq flyspell-issue-message-flag nil)
 
 (provide 'guess-language)
 
