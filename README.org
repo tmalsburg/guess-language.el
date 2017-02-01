@@ -3,6 +3,10 @@ I write a lot of text in multiple languages and I was getting tired of switching
 
 This is currently a proof of concept and only supports two languages, English and German.  However, it should be very easy to add more languages.
 
+** Prerequisites
+
+This mode assumes that you have Flyspell configured for all relevant languages (i.e., those listed in ~guess-language-languages~).  Guess-language also assumes that [[https://github.com/jorgenschaefer/typoel][typo-mode]] is installed and set up.
+
 ** Configuration
 
 #+BEGIN_SRC elisp
