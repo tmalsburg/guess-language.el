@@ -27,7 +27,7 @@
 ;; trigrams.  The trigrams are copied from guess_language.py
 ;; (https://github.com/kent37/guess-language).
 
-(defvar guess-language-languages '(en de))
+(defvar guess-language-languages '(en de fr))
 
 (defvar guess-language-min-paragraph-length 40)
 
@@ -35,7 +35,7 @@
   (cl-loop
    for lang in guess-language-languages
    for trigrams = (with-temp-buffer
-                    (insert-file-contents (symbol-name lang))
+                    (insert-file-contents (concat "trigrams/" (symbol-name lang)))
                     (split-string (buffer-string) "\n" t))
    collect (cons lang trigrams)))
 
@@ -73,12 +73,15 @@
 ispell dictionaries accordingly."
   (interactive)
   (pcase (guess-language-paragraph)
+    ('de (progn
+           (ispell-change-dictionary "de")
+           (typo-change-language "German")))
     ('en (progn
            (ispell-change-dictionary "en")
            (typo-change-language "English")))
-    ('de (progn
-           (ispell-change-dictionary "de")
-           (typo-change-language "German")))))
+    ('fr (progn
+           (ispell-change-dictionary "francais")
+           (typo-change-language "French")))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
   "Runs `guess-language-autoset' and then the flyspell on the
