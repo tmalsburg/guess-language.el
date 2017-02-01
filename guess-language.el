@@ -50,7 +50,10 @@ languages are:
   (cl-loop
    for lang in guess-language-languages
    for trigrams = (with-temp-buffer
-                    (insert-file-contents (concat "trigrams/" (symbol-name lang)))
+                    (insert-file-contents (concat
+                                           (file-name-directory (cdr (find-function-library 'guess-language-mode)))
+                                           "/trigrams/"
+                                           (symbol-name lang)))
                     (split-string (buffer-string) "\n" t))
    collect (cons lang trigrams)))
 
