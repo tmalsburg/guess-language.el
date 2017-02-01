@@ -80,7 +80,7 @@ ispell dictionaries accordingly."
            (ispell-change-dictionary "de")
            (typo-change-language "German")))))
 
-(defun guess-language-autoset-and-spellcheck (beginning end doublon)
+(defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
   "Runs `guess-language-autoset' and then the flyspell on the
 current paragraph."
   (let ((old-dictionary ispell-local-dictionary)
@@ -89,15 +89,40 @@ current paragraph."
     (when (> (- end beginning) guess-language-min-paragraph-length)
       (guess-language-autoset)
       (unless (string= old-dictionary ispell-local-dictionary)
-        (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
+        (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe)
         (flyspell-region (save-excursion (backward-paragraph) (point))
                          (save-excursion (forward-paragraph) (point)))
-        (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)))))
-
-(add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
+        (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe)))))
 
 (setq flyspell-issue-welcome-flag nil)
 (setq flyspell-issue-message-flag nil)
+
+(define-minor-mode guess-language-mode
+  "Toggle guess-language mode.
+Interactively with no argument, this command toggles the mode.
+A positive prefix argument enables the mode, any other prefix
+argument disables it.  From Lisp, argument omitted or nil enables
+the mode, `toggle' toggles the state.
+
+Guess-language mode is a buffer-local minor mode.  When enabled,
+it guesses the language when flyspell detects words that are
+incorrectly and changes the ispell's dictionary and typo-mode
+accordingly.  If the language settings change, flyspell is run on
+the current paragraph.  If the paragraph is shorter than
+`guess-language-min-paragraph-length' none of the above happens
+because there is likely not enough text to guess the language
+correctly."
+  ;; The initial value.
+  :init-value nil
+  ;; The indicator for the mode line.
+  :lighter " Guess-lang"
+  :global nil
+  :group 'guess-language
+  (if guess-language-mode
+      (add-hook 'flyspell-incorrect-hook
+                #'guess-language-autoset-and-spellcheck-maybe)
+    (remove-hook 'flyspell-incorrect-hook
+                 #'guess-language-autoset-and-spellcheck-maybe)))
 
 (provide 'guess-language)
 
