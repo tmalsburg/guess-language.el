@@ -20,12 +20,12 @@
 
 ;;; Commentary:
 
-;; Just a proof of concept at this time.  Only supports English and
-;; German but can easily be extended to handle other languages.
+;; At this time, supported languages are English, French,
+;; German.  Adding more languages is easy though.  The detection
+;; algorithm is based on counts of character trigrams.
 
-;; The detection algorithm is based on counts of character
-;; trigrams.  The trigrams are copied from guess_language.py
-;; (https://github.com/kent37/guess-language).
+;; See here for more details:
+;; https://github.com/tmalsburg/guess-language.el
 
 (defcustom guess-language-languages '(en de fr)
   "List of symbols that identify the languages that should be
