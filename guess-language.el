@@ -47,6 +47,8 @@
          for regexp = (concat "\\(" regexp "\\)")
          collect (cons (car lang) regexp))))
 
+(with-eval-after-load "guess-language" (guess-language-compile-regexps))
+
 (defun guess-language (beginning end)
   (let ((tally (cl-loop
                 for lang in guess-language-regexps
