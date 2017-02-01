@@ -43,6 +43,9 @@ languages are:
   :type 'integer
   :group 'guess-language)
 
+(defvar guess-language-regexps nil
+  "The regular expressions that are used to count trigrams.")
+
 (defun guess-language-load-trigrams ()
   (cl-loop
    for lang in guess-language-languages
@@ -59,9 +62,9 @@ languages are:
          for regexp = (concat "\\(" regexp "\\)")
          collect (cons (car lang) regexp))))
 
-(with-eval-after-load "guess-language" (guess-language-compile-regexps))
-
 (defun guess-language (beginning end)
+  (unless guess-language-regexps
+    (guess-language-compile-regexps))
   (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language-regexps))
     (guess-language-compile-regexps))
   (let ((tally (cl-loop
