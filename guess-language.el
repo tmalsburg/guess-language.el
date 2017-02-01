@@ -71,7 +71,7 @@ languages are:
                 for lang in guess-language-regexps
                 for regexp = (cdr lang)
                 collect (cons (car lang) (how-many regexp beginning end)))))
-    (car (--max-by (> (cdr it) (cdr other)) tally))))
+    (car (reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
 
 (defun guess-language-buffer ()
   (interactive)
