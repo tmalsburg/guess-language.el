@@ -2,3 +2,20 @@
 I write a lot of text in multiple languages and I was getting tired of switching the dictionary of my spell-checker all the time.  In true Emacs spirit, I decided to do something about this and dusted off my grandpa's parentheses.  The code in this repository guesses the language of the current paragraph and then changes the dictionary of ispell and the language-specific settings of typo-mode.  It also reruns flyspell on the current paragraph, but only on that paragraph because some documents are written in multiple languages and I want to leave paragraphs in other languages untouched.
 
 This is currently a proof of concept and only supports two languages, English and German.  However, it should be very easy to add more languages.
+
+** Configuration
+
+#+BEGIN_SRC elisp
+(require 'guess-language)
+
+(setq guess-language-languages '(en de))
+(setq guess-language-min-paragraph-length 30)
+#+END_SRC
+
+** Usage
+
+Activate ~guess-language-mode~ in the buffer in which you want to use it.  To activate is automatically in buffers containing human language (as opposed to programming language), you could add this to ~text-mode-hook~:
+
+#+BEGIN_SRC elisp
+(add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
+#+END_SRC
