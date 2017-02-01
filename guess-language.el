@@ -29,6 +29,8 @@
 
 (defvar guess-language-languages '(en de))
 
+(defvar guess-language-min-paragraph-length 40)
+
 (defun guess-language-load-trigrams ()
   (cl-loop
    for lang in guess-language-languages
@@ -81,13 +83,16 @@ ispell dictionaries accordingly."
 (defun guess-language-autoset-and-spellcheck (beginning end doublon)
   "Runs `guess-language-autoset' and then the flyspell on the
 current paragraph."
-  (let ((old-dictionary ispell-local-dictionary))
-    (guess-language-autoset)
-    (unless (string= old-dictionary ispell-local-dictionary)
-      (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
-      (flyspell-region (save-excursion (backward-paragraph) (point))
-                       (save-excursion (forward-paragraph) (point)))
-      (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck))))
+  (let ((old-dictionary ispell-local-dictionary)
+        (beginning (save-excursion (backward-paragraph) (point)))
+        (end       (save-excursion (forward-paragraph) (point))))
+    (when (> (- end beginning) guess-language-min-paragraph-length)
+      (guess-language-autoset)
+      (unless (string= old-dictionary ispell-local-dictionary)
+        (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
+        (flyspell-region (save-excursion (backward-paragraph) (point))
+                         (save-excursion (forward-paragraph) (point)))
+        (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)))))
 
 (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck)
 
