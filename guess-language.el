@@ -124,6 +124,8 @@ current paragraph."
 (setq flyspell-issue-welcome-flag nil)
 (setq flyspell-issue-message-flag nil)
 
+(make-variable-buffer-local 'flyspell-incorrect-hook)
+
 (define-minor-mode guess-language-mode
   "Toggle guess-language mode.
 Interactively with no argument, this command toggles the mode.
