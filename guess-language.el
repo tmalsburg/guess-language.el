@@ -3,7 +3,7 @@
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
 ;; Version: 0.0.1
-;; Package-Requires: ((cl-lib "0.5"))
+;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -39,7 +39,9 @@ languages are:
   :group 'guess-language)
 
 (defcustom guess-language-min-paragraph-length 40
-  "When a paragraph is shorter than this value (in characters), guess-language doesn't do anything because there is likely too little material to reliably guess the language."
+  "When a paragraph is shorter than this value (in characters),
+guess-language doesn't do anything because there is likely too
+little material to reliably guess the language."
   :type 'integer
   :group 'guess-language)
 
