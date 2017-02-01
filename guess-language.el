@@ -62,6 +62,8 @@ languages are:
 (with-eval-after-load "guess-language" (guess-language-compile-regexps))
 
 (defun guess-language (beginning end)
+  (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language-regexps))
+    (guess-language-compile-regexps))
   (let ((tally (cl-loop
                 for lang in guess-language-regexps
                 for regexp = (cdr lang)
