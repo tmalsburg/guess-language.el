@@ -27,9 +27,21 @@
 ;; trigrams.  The trigrams are copied from guess_language.py
 ;; (https://github.com/kent37/guess-language).
 
-(defvar guess-language-languages '(en de fr))
+(defcustom guess-language-languages '(en de fr)
+  "List of symbols that identify the languages that should be
+considered when guessing language.  Currently supported
+languages are:
 
-(defvar guess-language-min-paragraph-length 40)
+  de: German
+  en: English
+  fr: French"
+  :type '(repeat symbol)
+  :group 'guess-language)
+
+(defcustom guess-language-min-paragraph-length 40
+  "When a paragraph is shorter than this value (in characters), guess-language doesn't do anything because there is likely too little material to reliably guess the language."
+  :type 'integer
+  :group 'guess-language)
 
 (defun guess-language-load-trigrams ()
   (cl-loop
