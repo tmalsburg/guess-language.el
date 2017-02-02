@@ -1,0 +1,15 @@
+
+
+This is a short text written for testing purposes and translated to several languages using Google translate. (en)
+
+Dies ist ein kurzer Text zu Testzwecken geschrieben und übersetzt in mehrere Sprachen mit Google Translate. (de)
+
+Ceci est un court texte écrit à des fins d'essais et traduit en plusieurs langues en utilisant Google translate. (fr)
+
+Jedná se o krátký text psaný pro účely testování a přeloženy do několika jazyků pomocí Překladače Google. (cs)
+
+Tämä on lyhyt teksti kirjoitettu testausta varten ja käännetty useita kieliä Google kääntää. (fi)
+
+Questo è un breve testo scritto a scopo di test e tradotta a parecchie lingue utilizzando Google Translate. (it)
+
+Это короткий текст, написанный для целей тестирования и переведен на несколько языков с помощью Google Translate. (ru)
