@@ -1,5 +1,9 @@
 * Emacs mode that automatically sets the language of the spell checker
 
+*tl;dr:* Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.  Supports multiple languages in one document.  Uses a robust algorithm that works with many languages and requires only 30–40 characters of text. Currently supported languages are: Czech, Dansk, Dutch, English, Finnish, French, German, Italian, Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.
+
+-----
+
 I write a lot of text in multiple languages and was getting tired of constantly having to switch the dictionary of my spell-checker.  In true Emacs spirit, I decided to dust off my grandpa's parentheses and wrote some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode.  It also reruns Flyspell on the current paragraph, but only on that paragraph because I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
 
 Currently, the following languages are supported: Czech, Dansk, Dutch, English, Finnish, French, German, Italian, Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  It is very easy to add more languages and this repository includes the necessary language statistics for 49 additional languages.  (These were copied from [[https://github.com/kent37/guess-language][guess_language.py]].)
