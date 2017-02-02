@@ -3,7 +3,7 @@
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
 ;; Version: 0.0.1
-;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
+;; Package-Requires: ((cl-lib "0.5") (emacs "24") (typo "1.1"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,14 @@
 
 ;; See here for more details:
 ;; https://github.com/tmalsburg/guess-language.el
+
+;;; Code:
+
+(require 'cl-lib)
+(require 'typo)
+(require 'find-func)
+(require 'ispell)
+(require 'flyspell)
 
 (defcustom guess-language-languages '(en de fr)
   "List of symbols that identify the languages that should be
@@ -76,7 +84,7 @@ little material to reliably guess the language."
                 for lang in guess-language-regexps
                 for regexp = (cdr lang)
                 collect (cons (car lang) (how-many regexp beginning end)))))
-    (car (reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
+    (car (cl-reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
 
 (defun guess-language-buffer ()
   (interactive)
@@ -156,7 +164,6 @@ correctly."
 (provide 'guess-language)
 
 ;; Local Variables:
-;; byte-compile-warnings: (not cl-functions obsolete)
 ;; coding: utf-8
 ;; indent-tabs-mode: nil
 ;; End:
