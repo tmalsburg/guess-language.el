@@ -163,12 +163,11 @@ current paragraph."
     (when (> (- end beginning) guess-language-min-paragraph-length)
       (guess-language-autoset)
       (unless (string= old-dictionary ispell-local-dictionary)
-        (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe)
         (let ((flyspell-issue-welcome-flag nil)
-              (flyspell-issue-message-flag nil))
+              (flyspell-issue-message-flag nil)
+              (flyspell-incorrect-hook nil))
           (flyspell-region (save-excursion (backward-paragraph) (point))
-                           (save-excursion (forward-paragraph) (point)))
-          (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe))))))
+                           (save-excursion (forward-paragraph) (point))))))))
 
 (define-minor-mode guess-language-mode
   "Toggle guess-language mode.
