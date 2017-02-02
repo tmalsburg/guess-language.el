@@ -56,6 +56,12 @@ little material to reliably guess the language."
 (defvar guess-language-regexps nil
   "The regular expressions that are used to count trigrams.")
 
+(defvar guess-language-langcodes
+  '((de . ("de" "German"))
+    (en . ("en" "English"))
+    (fr . ("francais" "French")))
+  "Language codes for ispell and typo-mode.")
+
 (defun guess-language-load-trigrams ()
   (cl-loop
    for lang in guess-language-languages
@@ -104,16 +110,10 @@ little material to reliably guess the language."
   "Detects language of the current paragraph and sets things like
 ispell dictionaries accordingly."
   (interactive)
-  (pcase (guess-language-paragraph)
-    ('de (progn
-           (ispell-change-dictionary "de")
-           (typo-change-language "German")))
-    ('en (progn
-           (ispell-change-dictionary "en")
-           (typo-change-language "English")))
-    ('fr (progn
-           (ispell-change-dictionary "francais")
-           (typo-change-language "French")))))
+  (let* ((lang (guess-language-paragraph))
+         (codes (cdr (assoc lang guess-language-langcodes))))
+    (ispell-change-dictionary (car codes))
+    (typo-change-language (cadr codes))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
   "Runs `guess-language-autoset' and then the flyspell on the
