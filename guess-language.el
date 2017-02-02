@@ -68,9 +68,24 @@ little material to reliably guess the language."
   "The regular expressions that are used to count trigrams.")
 
 (defvar guess-language-langcodes
-  '((de . ("de" "German"))
+  '(
+    ;; Languages with ispell and typo support:
+    (cs . ("czech" "Czech"))
+    (de . ("de" "German"))
     (en . ("en" "English"))
-    (fr . ("francais" "French")))
+    (fi . ("finnish" "Finnish"))
+    (it . ("italiano" "Italian"))
+    (fr . ("francais" "French"))
+    (ru . ("russian" "Russian"))
+    ;; Languages with ispell but no typo support:
+    (da . ("dansk" nil))
+    (nl . ("nederlands" nil))
+    (nb . ("norsk" nil))
+    (pl . ("polish" nil))
+    (pt . ("portuguese" nil))
+    (sk . ("slovak" nil))
+    (sl . ("slovenian" nil))
+    (sv . ("svenska" nil)))
   "Language codes for ispell and typo-mode.")
 
 (defun guess-language-load-trigrams ()
@@ -116,12 +131,14 @@ little material to reliably guess the language."
 
 (defun guess-language-autoset ()
   "Detects language of the current paragraph and changes updates
-ispell and typo mode accordingly."
+ispell and typo mode accordingly.  If typo doesn't support the
+language, we leave it alone."
   (interactive)
   (let* ((lang (guess-language-paragraph))
          (codes (cdr (assoc lang guess-language-langcodes))))
     (ispell-change-dictionary (car codes))
-    (typo-change-language (cadr codes))))
+    (when (cadr codes)
+      (typo-change-language (cadr codes)))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
   "Runs `guess-language-autoset' and then the flyspell on the
