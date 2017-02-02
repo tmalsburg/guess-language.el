@@ -153,10 +153,8 @@ correctly."
   :global nil
   :group 'guess-language
   (if guess-language-mode
-      (add-hook 'flyspell-incorrect-hook
-                #'guess-language-autoset-and-spellcheck-maybe)
-    (remove-hook 'flyspell-incorrect-hook
-                 #'guess-language-autoset-and-spellcheck-maybe)))
+      (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe nil t)
+    (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe t)))
 
 (provide 'guess-language)
 
