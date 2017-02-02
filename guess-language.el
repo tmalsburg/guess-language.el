@@ -22,7 +22,7 @@
 
 ;; Guess-language is a buffer-local minor mode.  It guesses the
 ;; language of the current paragraph when flyspell detects an
-;; incorrect word and changes ispell's dictionary and typo-mode
+;; incorrect word and changes Ispell's dictionary and typo-mode
 ;; accordingly.  If the language settings change, flyspell is rerun
 ;; but only on the current paragraph.  Guess-language thus supports
 ;; documents using multiple languages.  If the paragraph is shorter
@@ -48,9 +48,8 @@
 (require 'flyspell)
 
 (defcustom guess-language-languages '(en de fr)
-  "List of symbols that identify the languages that should be
-considered when guessing language.  Currently supported
-languages are:
+  "List of languages that should be considered.
+Uses ISO 639-1 identifiers.  Currently supported languages are:
 
   cs: Czech
   da: Dansk
@@ -66,12 +65,13 @@ languages are:
   ru: Russian
   sk: Slovak
   sl: Slovenian
-  sv: Swedish "
+  sv: Swedish"
   :type '(repeat symbol)
   :group 'guess-language)
 
 (defcustom guess-language-min-paragraph-length 40
-  "When a paragraph is shorter than this value (in characters),
+  "Minimum number of characters in paragraph.
+When a paragraph is shorter than this value (in characters),
 guess-language doesn't do anything because there is likely too
 little material to reliably guess the language."
   :type 'integer
@@ -99,9 +99,10 @@ little material to reliably guess the language."
     (sk . ("slovak" nil))
     (sl . ("slovenian" nil))
     (sv . ("svenska" nil)))
-  "Language codes for ispell and typo-mode.")
+  "Language codes for Ispell and typo-mode.")
 
 (defun guess-language-load-trigrams ()
+  "Load language statistics."
   (cl-loop
    for lang in guess-language-languages
    for fname = (expand-file-name (symbol-name lang)
@@ -114,6 +115,7 @@ little material to reliably guess the language."
    collect (cons lang trigrams)))
 
 (defun guess-language-compile-regexps ()
+  "Compile regular expressions used for guessing language."
   (setq guess-language-regexps
         (cl-loop
          for lang in (guess-language-load-trigrams)
@@ -122,6 +124,8 @@ little material to reliably guess the language."
          collect (cons (car lang) regexp))))
 
 (defun guess-language (beginning end)
+  "Guess language in the specified region.
+Region starts at BEGINNING and ends at END."
   (unless guess-language-regexps
     (guess-language-compile-regexps))
   (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language-regexps))
@@ -133,20 +137,22 @@ little material to reliably guess the language."
     (car (cl-reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
 
 (defun guess-language-buffer ()
+  "Guess the language of the buffer."
   (guess-language (point-min) (point-max)))
 
 (defun guess-language-paragraph ()
+  "Guess the language of the current paragraph."
   (let ((beginning (save-excursion (backward-paragraph) (point)))
         (end       (save-excursion (forward-paragraph) (point))))
     (guess-language beginning end)))
 
 (defun guess-language-region ()
+  "Guess language of the current region."
   (guess-language (region-beginning) (region-end)))
 
 (defun guess-language-autoset ()
-  "Detects language of the current paragraph and changes updates
-ispell and typo mode accordingly.  If typo doesn't support the
-language, we leave it alone."
+  "Update Ispell and typo-mode to match paragraph language.
+If typo doesn't support the language, we leave it alone."
   (interactive)
   (let* ((lang (guess-language-paragraph))
          (codes (cdr (assoc lang guess-language-langcodes))))
@@ -155,8 +161,8 @@ language, we leave it alone."
       (typo-change-language (cadr codes)))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
-  "Runs `guess-language-autoset' and then the flyspell on the
-current paragraph."
+  "Guess language and rerun spell-checker on paragraph.
+BEGINNING, END, and DOUBLON are ignored."
   (let ((old-dictionary ispell-local-dictionary)
         (beginning (save-excursion (backward-paragraph) (point)))
         (end       (save-excursion (forward-paragraph) (point))))
