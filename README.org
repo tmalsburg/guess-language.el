@@ -20,21 +20,23 @@ This mode assumes that Flyspell is activated and configured for all relevant lan
 
 Available languages at this time:
 
-- ~cs~: Czech
-- ~da~: Dansk
-- ~nl~: Dutch
-- ~en~: English
-- ~fi~: Finnish
-- ~fr~: French
-- ~de~: German
-- ~it~: Italian
-- ~nb~: Norwegian
-- ~pl~: Polish
-- ~pt~: Portuguese
-- ~ru~: Russian
-- ~sk~: Slovak
-- ~sl~: Slovenian
-- ~sv~: Swedish
+| IDO 639-1 code | Language   |
+|----------------+------------|
+| ~cs~           | Czech      |
+| ~da~           | Dansk      |
+| ~nl~           | Dutch      |
+| ~en~           | English    |
+| ~fi~           | Finnish    |
+| ~fr~           | French     |
+| ~de~           | German     |
+| ~it~           | Italian    |
+| ~nb~           | Norwegian  |
+| ~pl~           | Polish     |
+| ~pt~           | Portuguese |
+| ~ru~           | Russian    |
+| ~sk~           | Slovak     |
+| ~sl~           | Slovenian  |
+| ~sv~           | Swedish    |
 
 ** Usage
 
