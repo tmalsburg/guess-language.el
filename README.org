@@ -1,20 +1,21 @@
 * Emacs mode that automatically detects the language of what you are typing
 
-I write a lot of text in multiple (human) languages and I was getting tired of switching the dictionary of my spell-checker all the time.  In true Emacs spirit, I decided dust off my grandpa's parentheses and to write some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode.  It also reruns Flyspell on the current paragraph, but only on that paragraph because some documents are written in multiple languages and I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
+I write a lot of text in multiple languages and was getting tired of switching the dictionary of my spell-checker.  In true Emacs spirit, I decided dust off my grandpa's parentheses and to write some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode.  It also reruns Flyspell on the current paragraph, but only on that paragraph because some documents are written in multiple languages and I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
 
-This is currently a proof of concept and only three languages are supported: English, French, German.  However, it is very easy to add more languages and this repository already includes the necessary language statistics for 61 additional languages.  (These are copied from [[https://github.com/kent37/guess-language][guess_language.py]].)
+This is currently a proof of concept and only three languages are supported: English, French, German.  However, it is very easy to add more languages and this repository includes the necessary language statistics for 61 additional languages.  (These were copied from [[https://github.com/kent37/guess-language][guess_language.py]].)
 
 ** Prerequisites
 
-This mode assumes that you have Flyspell is activated and configured for all relevant languages (i.e., those listed in ~guess-language-languages~).  Guess-language also assumes that [[https://github.com/jorgenschaefer/typoel][typo-mode]] is installed and set up.
+This mode assumes that Flyspell is activated and configured for all relevant languages, i.e., those listed in ~guess-language-languages~.  Guess-language also assumes that [[https://github.com/jorgenschaefer/typoel][typo-mode]] is installed and set up.
 
 ** Configuration
 
 #+BEGIN_SRC elisp
 (require 'guess-language)
 
+;; Optionally:
 (setq guess-language-languages '(en de))
-(setq guess-language-min-paragraph-length 30)
+(setq guess-language-min-paragraph-length 35)
 #+END_SRC
 
 Available languages at this time:
@@ -25,7 +26,7 @@ Available languages at this time:
 
 ** Usage
 
-Activate ~guess-language-mode~ in the buffer in which you want to use it.  To activate it automatically in buffers containing human language (as opposed to programming language), add this to ~text-mode-hook~:
+Activate ~guess-language-mode~ in the buffer in which you want to use it.  To activate it automatically in buffers containing text (as opposed to code), add guess-language mode to ~text-mode-hook~:
 
 #+BEGIN_SRC elisp
 (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
