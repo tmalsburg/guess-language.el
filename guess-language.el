@@ -66,8 +66,7 @@ languages are:
   ru: Russian
   sk: Slovak
   sl: Slovenian
-  sv: Swedish
-"
+  sv: Swedish "
   :type '(repeat symbol)
   :group 'guess-language)
 
@@ -105,11 +104,12 @@ little material to reliably guess the language."
 (defun guess-language-load-trigrams ()
   (cl-loop
    for lang in guess-language-languages
+   for fname = (expand-file-name (symbol-name lang)
+                                 (expand-file-name "trigrams"
+                                                   (file-name-directory
+                                                    (or load-file-name buffer-file-name))))
    for trigrams = (with-temp-buffer
-                    (insert-file-contents (concat
-                                           (file-name-directory (cdr (find-function-library 'guess-language-mode)))
-                                           "/trigrams/"
-                                           (symbol-name lang)))
+                    (insert-file-contents fname)
                     (split-string (buffer-string) "\n" t))
    collect (cons lang trigrams)))
 
