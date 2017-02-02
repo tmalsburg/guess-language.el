@@ -30,10 +30,11 @@
 ;; there is likely not enough text to guess the language correctly.
 ;;
 ;; The detection algorithm is based on counts of character
-;; trigrams.  At this time, supported languages are English, French,
-;; German.  Adding more languages is very easy, though, and this
-;; package already contains language statistics for 61 additional
-;; languages.
+;; trigrams.  At this time, supported languages are Czech, Dansk,
+;; Dutch, English, Finnish, French, German, Italian, Norwegian,
+;; Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  Adding
+;; further languages is very easy and this package already contains
+;; language statistics for 49 additional languages.
 
 ;; See here for more details:
 ;; https://github.com/tmalsburg/guess-language.el
@@ -51,9 +52,22 @@
 considered when guessing language.  Currently supported
 languages are:
 
-  de: German
+  cs: Czech
+  da: Dansk
+  nl: Dutch
   en: English
-  fr: French"
+  fi: Finnish
+  fr: French
+  de: German
+  it: Italian
+  nb: Norwegian
+  pl: Polish
+  pt: Portuguese
+  ru: Russian
+  sk: Slovak
+  sl: Slovenian
+  sv: Swedish
+"
   :type '(repeat symbol)
   :group 'guess-language)
 

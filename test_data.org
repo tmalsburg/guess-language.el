@@ -1,4 +1,5 @@
 
+Lanugages suppored by ispell and typo-mode:
 
 This is a short text written for testing purposes and translated to several languages using Google translate. (en)
 
@@ -13,3 +14,7 @@ Tämä on lyhyt teksti kirjoitettu testausta varten ja käännetty useita kieli�
 Questo è un breve testo scritto a scopo di test e tradotta a parecchie lingue utilizzando Google Translate. (it)
 
 Это короткий текст, написанный для целей тестирования и переведен на несколько языков с помощью Google Translate. (ru)
+
+Norwegian has no support in typo-mode:
+
+Dette er en kort tekst skrevet for testing og oversatt til flere språk ved hjelp av Google Translate. (nb)

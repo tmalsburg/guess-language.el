@@ -2,7 +2,7 @@
 
 I write a lot of text in multiple languages and was getting tired of switching the dictionary of my spell-checker.  In true Emacs spirit, I decided dust off my grandpa's parentheses and to write some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode.  It also reruns Flyspell on the current paragraph, but only on that paragraph because some documents are written in multiple languages and I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
 
-This is currently a proof of concept and only three languages are supported: English, French, German.  However, it is very easy to add more languages and this repository includes the necessary language statistics for 61 additional languages.  (These were copied from [[https://github.com/kent37/guess-language][guess_language.py]].)
+Currently, the following languages are supported: Czech, Dansk, Dutch, English, Finnish, French, German, Italian, Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  It is very easy to add more languages and this repository includes the necessary language statistics for 49 additional languages.  (These were copied from [[https://github.com/kent37/guess-language][guess_language.py]].)
 
 ** Prerequisites
 
@@ -20,9 +20,21 @@ This mode assumes that Flyspell is activated and configured for all relevant lan
 
 Available languages at this time:
 
-- ~de~: German
+- ~cs~: Czech
+- ~da~: Dansk
+- ~nl~: Dutch
 - ~en~: English
+- ~fi~: Finnish
 - ~fr~: French
+- ~de~: German
+- ~it~: Italian
+- ~nb~: Norwegian
+- ~pl~: Polish
+- ~pt~: Portuguese
+- ~ru~: Russian
+- ~sk~: Slovak
+- ~sl~: Slovenian
+- ~sv~: Swedish
 
 ** Usage
 
