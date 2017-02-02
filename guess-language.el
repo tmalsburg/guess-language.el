@@ -93,17 +93,14 @@ little material to reliably guess the language."
     (car (cl-reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
 
 (defun guess-language-buffer ()
-  (interactive)
   (guess-language (point-min) (point-max)))
 
 (defun guess-language-paragraph ()
-  (interactive)
   (let ((beginning (save-excursion (backward-paragraph) (point)))
         (end       (save-excursion (forward-paragraph) (point))))
     (guess-language beginning end)))
 
 (defun guess-language-region ()
-  (interactive)
   (guess-language (region-beginning) (region-end)))
 
 (defun guess-language-autoset ()
