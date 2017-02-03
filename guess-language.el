@@ -30,7 +30,7 @@
 ;; there is likely not enough text to guess the language correctly.
 ;;
 ;; The detection algorithm is based on counts of character
-;; trigrams.  At this time, supported languages are Czech, Dansk,
+;; trigrams.  At this time, supported languages are Czech, Danish,
 ;; Dutch, English, Finnish, French, German, Italian, Norwegian,
 ;; Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  Adding
 ;; further languages is very easy and this package already contains
@@ -52,7 +52,7 @@
 Uses ISO 639-1 identifiers.  Currently supported languages are:
 
   cs: Czech
-  da: Dansk
+  da: Danish
   nl: Dutch
   en: English
   fi: Finnish
