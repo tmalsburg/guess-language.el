@@ -4,6 +4,7 @@
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
 ;; Version: 0.0.1
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24") (typo "1.1"))
+;; URL: https://github.com/tmalsburg/guess-language.el
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,9 +36,6 @@
 ;; Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  Adding
 ;; further languages is very easy and this package already contains
 ;; language statistics for 49 additional languages.
-
-;; See here for more details:
-;; https://github.com/tmalsburg/guess-language.el
 
 ;;; Code:
 
