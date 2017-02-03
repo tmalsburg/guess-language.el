@@ -1,7 +1,7 @@
 
 [[https://melpa.org/#/guess-language][file:https://melpa.org/packages/guess-language-badge.svg]]
 
-* guess-language: Emacs minor mode for robust language detection as you type
+* guess-language: Emacs minor mode for robust automatic language detection
 
 *tl;dr:* Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.  Uses a robust algorithm that works with many languages.  Can handle multiple languages in one document.
 

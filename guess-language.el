@@ -1,4 +1,4 @@
-;;; guess-language.el --- Automatically detect human language
+;;; guess-language.el --- Robust automatic language detection
 
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
