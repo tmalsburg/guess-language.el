@@ -33,9 +33,9 @@
 ;; The detection algorithm is based on counts of character
 ;; trigrams.  At this time, supported languages are Czech, Danish,
 ;; Dutch, English, Finnish, French, German, Italian, Norwegian,
-;; Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.  Adding
-;; further languages is very easy and this package already contains
-;; language statistics for 49 additional languages.
+;; Polish, Portuguese, Russian, Slovak, Slovenian, Spanish,
+;; Swedish.  Adding further languages is very easy and this package
+;; already contains language statistics for 49 additional languages.
 
 ;;; Code:
 
@@ -63,6 +63,7 @@ Uses ISO 639-1 identifiers.  Currently supported languages are:
   ru: Russian
   sk: Slovak
   sl: Slovenian
+  es: Spanish
   sv: Swedish"
   :type '(repeat symbol)
   :group 'guess-language)
@@ -90,8 +91,9 @@ little material to reliably guess the language."
     (ru . ("russian" "Russian"))
     ;; Languages with ispell but no typo support:
     (da . ("dansk" nil))
-    (nl . ("nederlands" nil))
+    (es . ("spanish" nil))
     (nb . ("norsk" nil))
+    (nl . ("nederlands" nil))
     (pl . ("polish" nil))
     (pt . ("portuguese" nil))
     (sk . ("slovak" nil))
