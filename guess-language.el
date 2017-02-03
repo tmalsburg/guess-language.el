@@ -105,10 +105,9 @@ little material to reliably guess the language."
   "Load language statistics."
   (cl-loop
    for lang in guess-language-languages
-   for fname = (expand-file-name (symbol-name lang)
-                                 (expand-file-name "trigrams"
-                                                   (file-name-directory
-                                                    (or load-file-name buffer-file-name))))
+   for fname = (expand-file-name
+                (symbol-name lang)
+                (file-name-directory (cdr (find-function-library 'guess-language-mode))))
    for trigrams = (with-temp-buffer
                     (insert-file-contents fname)
                     (split-string (buffer-string) "\n" t))
