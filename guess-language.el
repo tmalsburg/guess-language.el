@@ -175,6 +175,7 @@ BEGINNING, END, and DOUBLON are ignored."
           (flyspell-region (save-excursion (backward-paragraph) (point))
                            (save-excursion (forward-paragraph) (point))))))))
 
+;;;###autoload
 (define-minor-mode guess-language-mode
   "Toggle guess-language mode.
 Interactively with no argument, this command toggles the mode.
