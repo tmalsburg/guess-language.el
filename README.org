@@ -1,6 +1,6 @@
 * Emacs mode that automatically sets the language of the spell checker
 
-*tl;dr:* Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.  Supports multiple languages in one document.  Uses a robust algorithm that works with many languages and requires only 30–40 characters of text. Currently supported languages are: Czech, Dansk, Dutch, English, Finnish, French, German, Italian, Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Swedish.
+*tl;dr:* Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.  Uses a robust algorithm that works with many languages.  Can handle multiple languages in one document.
 
 -----
 
