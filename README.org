@@ -51,12 +51,16 @@ In this case, use the variable ~guess-language-langcodes~ to tell guess-language
 #+BEGIN_SRC elisp
 (setq guess-language-langcodes
   '((en . ("en_GB" "English"))
-    (de . ("de_CH"    "German"))))
+    (de . ("de_CH" "German"))))
 #+END_SRC
 
+For a list of all dictionaries available for spell checking, use the following:
 
+#+BEGIN_SRC org
+(mapcar 'car ispell-dictionary-alist)
+#+END_SRC
 
-Available languages at this time:
+Languages that are currently supported by guess-language-mode:
 
 | Language   | IDO 639-1 code | Ispell dictionary | Typo-mode setting |
 |------------+----------------+-------------------+-------------------|
