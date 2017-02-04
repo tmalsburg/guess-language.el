@@ -31,9 +31,9 @@
 ;; there is likely not enough text to guess the language correctly.
 ;;
 ;; The detection algorithm is based on counts of character
-;; trigrams.  At this time, supported languages are Czech, Danish,
-;; Dutch, English, Finnish, French, German, Italian, Norwegian,
-;; Polish, Portuguese, Russian, Slovak, Slovenian, Spanish,
+;; trigrams.  At this time, supported languages are Arabic, Czech,
+;; Danish, Dutch, English, Finnish, French, German, Italian,
+;; Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Spanish,
 ;; Swedish.  Adding further languages is very easy and this package
 ;; already contains language statistics for 49 additional languages.
 
@@ -49,6 +49,7 @@
   "List of languages that should be considered.
 Uses ISO 639-1 identifiers.  Currently supported languages are:
 
+  ar: Arabic
   cs: Czech
   da: Danish
   nl: Dutch
