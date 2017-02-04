@@ -36,27 +36,48 @@ Guess-language-mode is available through [[https://melpa.org/#/guess-language][M
 (setq guess-language-min-paragraph-length 35)
 #+END_SRC
 
+~guess-language-languages~ defines the candidate languages that should be considered.  Only include languages that you actually use to improve performance.  Languages are identified using ISO 639-1 codes (see table below).
+
+~guess-language-min-paragraph-length~ specifies the minimal length that a paragraph needs to have before guess-language-mode starts guessing.
+
+For each language, there is a default Ispell dictionary that guess-language-mode tries to use.  However, for some languages there are several dictionaries available and guess-language can’t know which one you’d like to use.  For example, there are several different dictionaries for German and for English.  If the dictionary that guess-language-mode uses by default is not present, you will get an error message like the following:
+
+#+BEGIN_SRC elisp
+Error in post-command-hook (flyspell-post-command-hook): (error "Undefined dictionary: en")
+#+END_SRC
+
+In this case, use the variable ~guess-language-langcodes~ to tell guess-language-mode which dictionary should be used instead.  For example, use the following definition if you want to use British English and Swiss German:
+
+#+BEGIN_SRC elisp
+(setq guess-language-langcodes
+  '((en . ("en_GB" "English"))
+    (de . ("de_CH"    "German"))))
+#+END_SRC
+
+
+
 Available languages at this time:
 
-| IDO 639-1 code | Language   |
-|----------------+------------|
-| ~ar~           | Arabic     |
-| ~cs~           | Czech      |
-| ~da~           | Danish     |
-| ~nl~           | Dutch      |
-| ~en~           | English    |
-| ~es~           | Spanish    |
-| ~fi~           | Finnish    |
-| ~fr~           | French     |
-| ~de~           | German     |
-| ~it~           | Italian    |
-| ~nb~           | Norwegian  |
-| ~pl~           | Polish     |
-| ~pt~           | Portuguese |
-| ~ru~           | Russian    |
-| ~sk~           | Slovak     |
-| ~sl~           | Slovenian  |
-| ~sv~           | Swedish    |
+| Language   | IDO 639-1 code | Ispell dictionary | Typo-mode setting |
+|------------+----------------+-------------------+-------------------|
+| Arabic     | ~ar~           | ar                |                   |
+| Czech      | ~cs~           | czech             | Czech             |
+| Danish     | ~da~           | dansk             |                   |
+| Dutch      | ~nl~           | de                |                   |
+| English    | ~en~           | en                | English           |
+| Finnish    | ~fi~           | finnish           | Finnish           |
+| French     | ~fr~           | francais          | French            |
+| German     | ~de~           | de                | German            |
+| Italian    | ~it~           | italiano          | Italian           |
+| Norwegian  | ~nb~           | norsk             |                   |
+| Polish     | ~pl~           | polish            |                   |
+| Portuguese | ~pt~           | portuguese        |                   |
+| Russian    | ~ru~           | russian           | Russian           |
+| Slovak     | ~sk~           | slovak            |                   |
+| Slovenian  | ~sl~           | slovenian         |                   |
+| Spanish    | ~es~           | spanish           |                   |
+| Swedish    | ~sv~           | svenska           |                   |
+
 
 ** Usage
 

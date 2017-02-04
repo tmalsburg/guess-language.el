@@ -80,26 +80,34 @@ little material to reliably guess the language."
 (defvar guess-language-regexps nil
   "The regular expressions that are used to count trigrams.")
 
-(defvar guess-language-langcodes
-  '(
-    (ar . ("ar" nil))
-    (cs . ("czech" "Czech"))
-    (da . ("dansk" nil))
-    (de . ("de" "German"))
-    (en . ("en" "English"))
-    (es . ("spanish" nil))
-    (fi . ("finnish" "Finnish"))
-    (fr . ("francais" "French"))
-    (it . ("italiano" "Italian"))
-    (nb . ("norsk" nil))
+(defcustom guess-language-langcodes
+  '((ar . ("ar"         nil))
+    (cs . ("czech"      "Czech"))
+    (da . ("dansk"      nil))
+    (de . ("de"         "German"))
+    (en . ("en"         "English"))
+    (es . ("spanish"    nil))
+    (fi . ("finnish"    "Finnish"))
+    (fr . ("francais"   "French"))
+    (it . ("italiano"   "Italian"))
+    (nb . ("norsk"      nil))
     (nl . ("nederlands" nil))
-    (pl . ("polish" nil))
+    (pl . ("polish"     nil))
     (pt . ("portuguese" nil))
-    (ru . ("russian" "Russian"))
-    (sk . ("slovak" nil))
-    (sl . ("slovenian" nil))
-    (sv . ("svenska" nil)))
-  "Language codes for Ispell and typo-mode.")
+    (ru . ("russian"    "Russian"))
+    (sk . ("slovak"     nil))
+    (sl . ("slovenian"  nil))
+    (sv . ("svenska"    nil)))
+  "Language codes for Ispell and typo-mode.  The key is a symbol
+giving the ISO 639-1 code of the language.  The values is a list
+with two elements.  The first is the name of the Ispell
+dictionary that should be used (i.e., what you would enter when
+setting the language with `ispell-change-dictionary'.  The second
+element is the name of the language setting that should be used
+with typo-mode.  If a language is not supported by typo-mode,
+enter `nil'."
+  :type '(alist :key-type symbol :value-type list)
+  :group 'guess-language)
 
 (defun guess-language-load-trigrams ()
   "Load language statistics."
