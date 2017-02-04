@@ -3,9 +3,7 @@
 
 * guess-language: Emacs minor mode for robust automatic language detection
 
-*tl;dr:* Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.  Uses a robust algorithm that works with many languages.  Can handle multiple languages in one document.
-
------
+Emacs minor mode that detects the language of what you're typing.  Automatically switches spell checker and typo-mode.
 
 *Key features:*
 - Detection algorithm is robust, efficient, and dead simple.  Based on
@@ -13,6 +11,8 @@
 - Support for many languages.  More can be easily added.
 - Stays out of your way.  Set up once, then forget it exists.
 - Works with documents written in multiple languages.
+
+-----
 
 I write a lot of text in multiple languages and was getting tired of constantly having to switch the dictionary of my spell-checker.  In true Emacs spirit, I decided to dust off my grandpa's parentheses and wrote some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode.  It also reruns Flyspell on the current paragraph, but only on that paragraph because I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
 
