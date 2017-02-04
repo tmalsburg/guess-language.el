@@ -113,9 +113,10 @@ enter `nil'."
   "Load language statistics."
   (cl-loop
    for lang in guess-language-languages
-   for fname = (expand-file-name
-                (symbol-name lang)
-                (file-name-directory (cdr (find-function-library 'guess-language-mode))))
+   for basedir = (file-name-directory (cdr (find-function-library 'guess-language-mode)))
+   for fname = (let ((dir1 (expand-file-name (symbol-name lang) basedir))
+                     (dir2 (expand-file-name (symbol-name lang) (expand-file-name "trigrams" basedir))))
+                 (if (file-exists-p dir1) dir1 dir2))
    for trigrams = (with-temp-buffer
                     (insert-file-contents fname)
                     (split-string (buffer-string) "\n" t))
