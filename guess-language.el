@@ -102,7 +102,7 @@ little material to reliably guess the language."
 giving the ISO 639-1 code of the language.  The values is a list
 with two elements.  The first is the name of the Ispell
 dictionary that should be used (i.e., what you would enter when
-setting the language with `ispell-change-dictionary'.  The second
+setting the language with `ispell-change-dictionary').  The second
 element is the name of the language setting that should be used
 with typo-mode.  If a language is not supported by typo-mode,
 enter `nil'."
