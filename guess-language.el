@@ -202,7 +202,7 @@ correctly."
   ;; The initial value.
   :init-value nil
   ;; The indicator for the mode line.
-  :lighter " Guess-lang"
+  :lighter '(:eval (format " (%s)" (or ispell-local-dictionary "default")))
   :global nil
   :group 'guess-language
   (if guess-language-mode
