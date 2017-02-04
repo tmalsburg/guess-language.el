@@ -1,20 +1,34 @@
 
-Lanugages suppored by ispell and typo-mode:
+ar: وهذا هو نص قصير مكتوب أغراض الاختبار وترجمتها إلى عدة لغات باستخدام جوجل ترجمة
 
-This is a short text written for testing purposes and translated to several languages using Google translate. (en)
+cs: Jedná se o krátký text psaný pro účely testování a přeloženy do několika jazyků pomocí Překladače Google.
 
-Dies ist ein kurzer Text zu Testzwecken geschrieben und übersetzt in mehrere Sprachen mit Google Translate. (de)
+da: Dette er en kort tekst skrevet til testformål og oversat til flere sprog ved hjælp af Google Translate.
 
-Ceci est un court texte écrit à des fins d'essais et traduit en plusieurs langues en utilisant Google translate. (fr)
+de: Dies ist ein kurzer Text zu Testzwecken geschrieben und übersetzt in mehrere Sprachen mit Google Translate.
 
-Jedná se o krátký text psaný pro účely testování a přeloženy do několika jazyků pomocí Překladače Google. (cs)
+en: This is a short text written for testing purposes and translated to several languages using Google translate.
 
-Tämä on lyhyt teksti kirjoitettu testausta varten ja käännetty useita kieliä Google kääntää. (fi)
+es: Este es un texto corto escrito para propósitos de prueba y traducido a varios idiomas usando Google translate.
 
-Questo è un breve testo scritto a scopo di test e tradotta a parecchie lingue utilizzando Google Translate. (it)
+fi: Tämä on lyhyt teksti kirjoitettu testausta varten ja käännetty useita kieliä Google kääntää.
 
-Это короткий текст, написанный для целей тестирования и переведен на несколько языков с помощью Google Translate. (ru)
+fr: Ceci est un court texte écrit à des fins d'essais et traduit en plusieurs langues en utilisant Google translate.
 
-Norwegian has no support in typo-mode:
+it: Questo è un breve testo scritto a scopo di test e tradotta a parecchie lingue utilizzando Google Translate.
 
-Dette er en kort tekst skrevet for testing og oversatt til flere språk ved hjelp av Google Translate. (nb)
+nb: Dette er en kort tekst skrevet for testing og oversatt til flere språk ved hjelp av Google Translate.
+
+nl: Dit is een korte tekst geschreven voor testdoeleinden en vertaald naar verschillende talen met behulp van Google vertalen.
+
+pl: Jest to krótki tekst napisany w celach testowych i przetłumaczony na kilka języków za pomocą Google Translate.
+
+pt: Este é um texto curto escrito para fins de teste e traduzido para vários idiomas usando o Google translate.
+
+ru: Это короткий текст, написанный для целей тестирования и переведен на несколько языков с помощью Google Translate.
+
+sk: Jedná sa o krátky text písaný na účely testovania a preložené do niekoľkých jazykov pomocou služby Google Translate.
+
+sl: To je kratko besedilo, napisano za testiranje in prevedena v več jezikov, ki uporabljajo Google translate.
+
+sv: Detta är en kort text skriven för teständamål och översatt till flera språk med Google translate.

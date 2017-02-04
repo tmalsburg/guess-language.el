@@ -81,21 +81,20 @@ little material to reliably guess the language."
 
 (defvar guess-language-langcodes
   '(
-    ;; Languages with ispell and typo support:
+    (ar . ("ar" nil))
     (cs . ("czech" "Czech"))
+    (da . ("dansk" nil))
     (de . ("de" "German"))
     (en . ("en" "English"))
-    (fi . ("finnish" "Finnish"))
-    (it . ("italiano" "Italian"))
-    (fr . ("francais" "French"))
-    (ru . ("russian" "Russian"))
-    ;; Languages with ispell but no typo support:
-    (da . ("dansk" nil))
     (es . ("spanish" nil))
+    (fi . ("finnish" "Finnish"))
+    (fr . ("francais" "French"))
+    (it . ("italiano" "Italian"))
     (nb . ("norsk" nil))
     (nl . ("nederlands" nil))
     (pl . ("polish" nil))
     (pt . ("portuguese" nil))
+    (ru . ("russian" "Russian"))
     (sk . ("slovak" nil))
     (sl . ("slovenian" nil))
     (sv . ("svenska" nil)))
