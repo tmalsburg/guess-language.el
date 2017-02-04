@@ -7,7 +7,7 @@
 
 -----
 
-Key features:
+*Key features:*
 - Detection algorithm is robust, efficient, and dead simple.  Based on
   character trigrams.
 - Support for many languages.  More can be easily added.
