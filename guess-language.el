@@ -23,12 +23,13 @@
 
 ;; Guess-language is a buffer-local minor mode.  It guesses the
 ;; language of the current paragraph when flyspell detects an
-;; incorrect word and changes Ispell's dictionary and typo-mode
-;; accordingly.  If the language settings change, flyspell is rerun
-;; but only on the current paragraph.  Guess-language thus supports
-;; documents using multiple languages.  If the paragraph is shorter
-;; than some user-defined value, none of the above happens because
-;; there is likely not enough text to guess the language correctly.
+;; incorrect word and changes Ispell's dictionary and typo-mode (if
+;; present) accordingly.  If the language settings change, flyspell is
+;; rerun but only on the current paragraph.  Guess-language thus
+;; supports documents using multiple languages.  If the paragraph is
+;; shorter than some user-defined value, none of the above happens
+;; because there is likely not enough text to guess the language
+;; correctly.
 ;;
 ;; The detection algorithm is based on counts of character
 ;; trigrams.  At this time, supported languages are Arabic, Czech,
@@ -40,7 +41,6 @@
 ;;; Code:
 
 (require 'cl-lib)
-(require 'typo)
 (require 'find-func)
 (require 'ispell)
 (require 'flyspell)
@@ -165,7 +165,7 @@ If typo doesn't support the language, we leave it alone."
   (let* ((lang (guess-language-paragraph))
          (codes (cdr (assoc lang guess-language-langcodes))))
     (ispell-change-dictionary (car codes))
-    (when (cadr codes)
+    (when (and (boundp typo-mode) (cadr codes))
       (typo-change-language (cadr codes)))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
