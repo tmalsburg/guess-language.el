@@ -179,7 +179,8 @@ BEGINNING, END, and DOUBLON are ignored."
       (unless (string= old-dictionary ispell-local-dictionary)
         (let ((flyspell-issue-welcome-flag nil)
               (flyspell-issue-message-flag nil)
-              (flyspell-incorrect-hook nil))
+              (flyspell-incorrect-hook nil)
+              (flyspell-large-region 1))
           (flyspell-region (save-excursion (backward-paragraph) (point))
                            (save-excursion (forward-paragraph) (point))))))))
 
