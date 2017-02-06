@@ -69,7 +69,7 @@ Languages that are currently supported by guess-language-mode:
 | Arabic     | ~ar~           | ar                        |                           |
 | Czech      | ~cs~           | czech                     | Czech                     |
 | Danish     | ~da~           | dansk                     |                           |
-| Dutch      | ~nl~           | de                        |                           |
+| Dutch      | ~nl~           | nederlands                |                           |
 | English    | ~en~           | en                        | English                   |
 | Finnish    | ~fi~           | finnish                   | Finnish                   |
 | French     | ~fr~           | francais                  | French                    |
