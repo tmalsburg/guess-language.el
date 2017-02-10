@@ -165,7 +165,7 @@ If typo doesn't support the language, we leave it alone."
   (let* ((lang (guess-language-paragraph))
          (codes (cdr (assoc lang guess-language-langcodes))))
     (ispell-change-dictionary (car codes))
-    (when (and (boundp typo-mode) (cadr codes))
+    (when (and (boundp 'typo-mode) (cadr codes))
       (typo-change-language (cadr codes)))))
 
 (defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
