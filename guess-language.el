@@ -53,30 +53,18 @@ dictionary, input methods, etc."
 
 (defcustom guess-language-languages '(en de fr)
   "List of languages that should be considered.
-Uses ISO 639-1 identifiers.  Currently supported languages are:
 
-  ar: Arabic
-  cs: Czech
-  da: Danish
-  nl: Dutch
-  en: English
-  fi: Finnish
-  fr: French
-  de: German
-  it: Italian
-  nb: Norwegian
-  pl: Polish
-  pt: Portuguese
-  ru: Russian
-  sk: Slovak
-  sl: Slovenian
-  es: Spanish
-  sv: Swedish"
+Uses ISO 639-1 identifiers.  Currently supported languages are:
+Arabic (ar),  Czech (cs),  Danish (da),  Dutch (nl),  English (en),
+Finnish (fi),  French (fr),  German (de),  Italian (it),
+Norwegian (nb),  Polish (pl),  Portuguese (pt),  Russian (ru),
+Slovak (sk),  Slovenian (sl),  Spanish (es),  Swedish (sv)"
   :type '(repeat symbol)
   :group 'guess-language)
 
 (defcustom guess-language-min-paragraph-length 40
   "Minimum number of characters in paragraph.
+
 When a paragraph is shorter than this value (in characters),
 guess-language doesn't do anything because there is likely too
 little material to reliably guess the language."
@@ -104,14 +92,16 @@ little material to reliably guess the language."
     (sk . ("slovak"     nil))
     (sl . ("slovenian"  nil))
     (sv . ("svenska"    nil)))
-  "Language codes for Ispell and typo-mode.  The key is a symbol
-giving the ISO 639-1 code of the language.  The values is a list
-with two elements.  The first is the name of the Ispell
-dictionary that should be used (i.e., what you would enter when
-setting the language with `ispell-change-dictionary').  The second
-element is the name of the language setting that should be used
-with typo-mode.  If a language is not supported by typo-mode,
-enter `nil'."
+  "Language codes for spell-checker and typo-mode.
+
+The key is a symbol specifying the ISO 639-1 code of the
+language.  The values is a list with two elements.  The first is
+the name of the dictionary that should be used by the
+spell-checker (e.g., what you would enter when setting the
+language with `ispell-change-dictionary').  The second element is
+the name of the language setting that should be used with
+typo-mode.  If a language is not supported by typo-mode, that
+value is nil."
   :type '(alist :key-type symbol :value-type list)
   :group 'guess-language)
 
@@ -139,6 +129,7 @@ enter `nil'."
 
 (defun guess-language (beginning end)
   "Guess language in the specified region.
+
 Region starts at BEGINNING and ends at END."
   (unless guess-language-regexps
     (guess-language-compile-regexps))
@@ -193,6 +184,7 @@ BEGINNING, END, and DOUBLON are ignored."
 ;;;###autoload
 (define-minor-mode guess-language-mode
   "Toggle guess-language mode.
+
 Interactively with no argument, this command toggles the mode.
 A positive prefix argument enables the mode, any other prefix
 argument disables it.  From Lisp, argument omitted or nil enables
