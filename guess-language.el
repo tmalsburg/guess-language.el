@@ -45,6 +45,12 @@
 (require 'ispell)
 (require 'flyspell)
 
+(defgroup guess-language nil
+  "Minor mode that automatically guesses the language being
+typed.  Automatically switches things like spell-checker
+dictionary, input methods, etc."
+  :group 'completion)
+
 (defcustom guess-language-languages '(en de fr)
   "List of languages that should be considered.
 Uses ISO 639-1 identifiers.  Currently supported languages are:
