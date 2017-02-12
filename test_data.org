@@ -7,13 +7,13 @@ da: Dette er en kort tekst skrevet til testformål og oversat til flere sprog ve
 
 de: Dies ist ein kurzer Text zu Testzwecken geschrieben und übersetzt in mehrere Sprachen mit Google Translate.
 
-en: This is a short text written for testing purposes and translated to several languages using Google translate.
+en: This is a short text written for testing purposes and translated to several languages using Google Translate.
 
-es: Este es un texto corto escrito para propósitos de prueba y traducido a varios idiomas usando Google translate.
+es: Este es un texto corto escrito para propósitos de prueba y traducido a varios idiomas usando Google Translate.
 
 fi: Tämä on lyhyt teksti kirjoitettu testausta varten ja käännetty useita kieliä Google kääntää.
 
-fr: Ceci est un court texte écrit à des fins d'essais et traduit en plusieurs langues en utilisant Google translate.
+fr: Ceci est un court texte écrit à des fins d'essais et traduit en plusieurs langues en utilisant Google Translate.
 
 it: Questo è un breve testo scritto a scopo di test e tradotta a parecchie lingue utilizzando Google Translate.
 
@@ -23,12 +23,12 @@ nl: Dit is een korte tekst geschreven voor testdoeleinden en vertaald naar versc
 
 pl: Jest to krótki tekst napisany w celach testowych i przetłumaczony na kilka języków za pomocą Google Translate.
 
-pt: Este é um texto curto escrito para fins de teste e traduzido para vários idiomas usando o Google translate.
+pt: Este é um texto curto escrito para fins de teste e traduzido para vários idiomas usando o Google Translate.
 
 ru: Это короткий текст, написанный для целей тестирования и переведен на несколько языков с помощью Google Translate.
 
 sk: Jedná sa o krátky text písaný na účely testovania a preložené do niekoľkých jazykov pomocou služby Google Translate.
 
-sl: To je kratko besedilo, napisano za testiranje in prevedena v več jezikov, ki uporabljajo Google translate.
+sl: To je kratko besedilo, napisano za testiranje in prevedena v več jezikov, ki uporabljajo Google Translate.
 
-sv: Detta är en kort text skriven för teständamål och översatt till flera språk med Google translate.
+sv: Detta är en kort text skriven för teständamål och översatt till flera språk med Google Translate.
