@@ -105,7 +105,7 @@ value is nil."
   :type '(alist :key-type symbol :value-type list)
   :group 'guess-language)
 
-(defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function)
+(defcustom guess-language-after-detection-functions '()
   "Hook run when a new language is detected.
 
 This hook is abnormal in that its functions take arguments,
@@ -240,6 +240,10 @@ correctly."
   (if guess-language-mode
       (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
     (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)))
+
+
+;;;###autoload
+(add-hook 'guess-language-after-detection-functions 'guess-language-switch-flyspell-function)
 
 (provide 'guess-language)
 
