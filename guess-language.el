@@ -105,6 +105,19 @@ value is nil."
   :type '(alist :key-type symbol :value-type list)
   :group 'guess-language)
 
+(defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function)
+  "Hook run when a new language is detected.
+
+This hook is abnormal in that its functions take arguments,
+namely a symbol indicating the language that was detected and the
+beginning and end of the region in which the language was
+detected."
+  :type 'hook
+  :group 'guess-language)
+
+(defvar guess-language-current-language nil
+  "The language detected when `guess-language' was last executed.")
+
 (defun guess-language-load-trigrams ()
   "Load language statistics."
   (cl-loop
@@ -127,10 +140,11 @@ value is nil."
          for regexp = (concat "\\(" regexp "\\)")
          collect (cons (car lang) regexp))))
 
-(defun guess-language (beginning end)
+(defun guess-language-region (beginning end)
   "Guess language in the specified region.
 
 Region starts at BEGINNING and ends at END."
+  (interactive "*r")
   (unless guess-language-regexps
     (guess-language-compile-regexps))
   (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language-regexps))
@@ -143,43 +157,62 @@ Region starts at BEGINNING and ends at END."
 
 (defun guess-language-buffer ()
   "Guess the language of the buffer."
-  (guess-language (point-min) (point-max)))
+  (guess-language-region (point-min) (point-max)))
 
 (defun guess-language-paragraph ()
   "Guess the language of the current paragraph."
   (let ((beginning (save-excursion (backward-paragraph) (point)))
         (end       (save-excursion (forward-paragraph) (point))))
-    (guess-language beginning end)))
+    (guess-language-region beginning end)))
 
-(defun guess-language-region ()
-  "Guess language of the current region."
-  (guess-language (region-beginning) (region-end)))
+(defun guess-language ()
+  "Guess language of the current paragraph.
 
-(defun guess-language-autoset ()
-  "Update Ispell and typo-mode to match paragraph language.
-If typo doesn't support the language, we leave it alone."
+Calls the functions in
+`guess-language-after-detection-functions`.  These functions may
+switch the dictionary of the spell checker and do other useful
+things like changing the keyboard layout or input method."
   (interactive)
-  (let* ((lang (guess-language-paragraph))
-         (codes (cdr (assoc lang guess-language-langcodes))))
-    (ispell-change-dictionary (car codes))
-    (when (and (boundp 'typo-mode) (cadr codes))
-      (typo-change-language (cadr codes)))))
-
-(defun guess-language-autoset-and-spellcheck-maybe (beginning end doublon)
-  "Guess language and rerun spell-checker on paragraph.
-BEGINNING, END, and DOUBLON are ignored."
-  (let ((old-dictionary ispell-local-dictionary)
-        (beginning (save-excursion (backward-paragraph) (point)))
-        (end       (save-excursion (forward-paragraph) (point))))
+  (let ((beginning (save-excursion (backward-paragraph) (point)))
+        (end       (save-excursion (forward-paragraph)  (point))))
     (when (> (- end beginning) guess-language-min-paragraph-length)
-      (guess-language-autoset)
-      (unless (string= old-dictionary ispell-local-dictionary)
-        (let ((flyspell-issue-welcome-flag nil)
-              (flyspell-issue-message-flag nil)
-              (flyspell-incorrect-hook nil)
-              (flyspell-large-region 1))
-          (flyspell-region (save-excursion (backward-paragraph) (point))
-                           (save-excursion (forward-paragraph) (point))))))))
+      (let ((lang (guess-language-region beginning end)))
+        (run-hook-with-args 'guess-language-after-detection-functions lang beginning end)
+        (setq guess-language-current-language lang)))))
+
+(defun guess-language-function (beginning end doublon)
+  "Wrapper for `guess-language' because `flyspell-incorrect-hook'
+provides three arguments that we don't need."
+  (guess-language))
+
+(defun guess-language-switch-flyspell-function (lang beginning end)
+  "Switch the Flyspell dictionary spell-checks current paragraph.
+
+This is only done if the new language is actually different from
+the previous language.  Otherwise, nothing happens.
+
+LANG is the ISO 639-1 code of the language (as a
+symbol).  BEGINNING and END are the endpoints of the region in
+which LANG was detected."
+  (let* ((old-dictionary (cadr (assq guess-language-current-language guess-language-langcodes)))
+         (new-dictionary (cadr (assq lang guess-language-langcodes))))
+    (unless (string= old-dictionary new-dictionary)
+      (ispell-change-dictionary new-dictionary)
+      (let ((flyspell-issue-welcome-flag nil)
+            (flyspell-issue-message-flag nil)
+            (flyspell-incorrect-hook nil)
+            (flyspell-large-region 1))
+        (flyspell-region beginning end)))))
+
+(defun guess-language-switch-typo-mode-function (lang beginning end)
+  "Switch the language used by typo-mode.
+
+LANG is the ISO 639-1 code of the language (as a
+symbol).  BEGINNING and END are the endpoints of the region in
+which LANG was detected."
+  (let* ((typo-lang (cl-caddr (assq lang guess-language-langcodes))))
+    (when typo-lang
+      (typo-change-language typo-lang))))
 
 ;;;###autoload
 (define-minor-mode guess-language-mode
@@ -205,8 +238,8 @@ correctly."
   :global nil
   :group 'guess-language
   (if guess-language-mode
-      (add-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe nil t)
-    (remove-hook 'flyspell-incorrect-hook #'guess-language-autoset-and-spellcheck-maybe t)))
+      (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
+    (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)))
 
 (provide 'guess-language)
 
