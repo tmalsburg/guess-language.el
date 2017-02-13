@@ -88,11 +88,11 @@ Languages that are currently supported by guess-language-mode:
 
 *** Custom functions to be run when a new language is detected
 
-While changing the spell-checker’s dictionary is the main purpose of guess-language, there are other things that a user might want to do when a new language is detected, for instance, a user might want to change the input method.  Things like that can be easily achieved by adding custom functions to the hook `guess-language-after-detection-functions`.  Functions on this hook take three arguments:
+While changing the spell-checker’s dictionary is the main purpose of guess-language, there are other things that a user might want to do when a new language is detected, for instance, a user might want to change the input method.  Things like that can be easily achieved by adding custom functions to the hook ~guess-language-after-detection-functions~.  Functions on this hook take three arguments:
 
-1. `LANG` the language that was detected
-2. `BEGINNING` the beginning of the region in which the new language was detected
-3. `END` the end of the region
+1. ~LANG~ the language that was detected
+2. ~BEGINNING~ the beginning of the region in which the new language was detected
+3. ~END~ the end of the region
 
 Template:
 
