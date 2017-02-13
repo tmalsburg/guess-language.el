@@ -116,7 +116,9 @@ detected."
   :group 'guess-language)
 
 (defvar guess-language-current-language nil
-  "The language detected when `guess-language' was last executed.")
+  "The language detected when `guess-language' was last executed.
+
+Uses ISO 639-1 to identify languages.")
 
 (defun guess-language-load-trigrams ()
   "Load language statistics."
@@ -234,7 +236,7 @@ correctly."
   ;; The initial value.
   :init-value nil
   ;; The indicator for the mode line.
-  :lighter (:eval (format " (%s)" (or ispell-local-dictionary "default")))
+  :lighter (:eval (format " (%s)" (or guess-language-current-language "default")))
   :global nil
   :group 'guess-language
   (if guess-language-mode
