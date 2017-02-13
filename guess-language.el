@@ -185,7 +185,10 @@ things like changing the keyboard layout or input method."
 (defun guess-language-function (beginning end doublon)
   "Wrapper for `guess-language' because `flyspell-incorrect-hook'
 provides three arguments that we don't need."
-  (guess-language))
+  (guess-language)
+  ;; Return nil because flyspell may otherwise not highlight incorrect
+  ;; words:
+  nil)
 
 (defun guess-language-switch-flyspell-function (lang beginning end)
   "Switch the Flyspell dictionary spell-checks current paragraph.
