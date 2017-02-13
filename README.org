@@ -28,6 +28,8 @@ Guess-language-mode is available through [[https://melpa.org/#/guess-language][M
 
 ** Configuration
 
+*** Language settings
+
 #+BEGIN_SRC elisp
 (require 'guess-language)
 
@@ -84,6 +86,31 @@ Languages that are currently supported by guess-language-mode:
 | Spanish    | ~es~           | spanish                   |                           |
 | Swedish    | ~sv~           | svenska                   |                           |
 
+*** Typo mode
+
+By default guess-language only switches the Ispell dictionary used by Flyspell (`ispell-change-dictionary`).  However, guess-language can also switch the language settings used by type-mode.  To activate this add the following to your configuration:
+
+#+BEGIN_SRC elisp
+(add-hook 'guess-language-after-detection-functions 'guess-language-switch-typo-mode-function)
+#+END_SRC
+
+
+*** Custom functions
+
+While changing the spell-checker’s dictionary is the main purpose of guess-language, there are other things that a user might want to do when a new language is detected, for instance, a user might want to change the input method.  Things like that can be easily achieved by adding custom functions to the hook `guess-language-after-detection-functions`.  Functions on this hook take three arguments:
+
+1. `LANG` the language that was detected
+2. `BEGINNING` the beginning of the region in which the new language was detected
+3. `END` the end of the region
+
+Template:
+
+#+BEGIN_SRC elisp
+(defun my-custom-function (lang beginning end)
+  (do-something))
+
+(add-hook 'guess-language-after-detection-functions #'my-custom-function)
+#+END_SRC
 
 ** Usage
 
