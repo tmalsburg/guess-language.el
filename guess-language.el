@@ -105,7 +105,8 @@ value is nil."
   :type '(alist :key-type symbol :value-type list)
   :group 'guess-language)
 
-(defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function)
+(defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function
+                                                          #'guess-language-switch-typo-mode-function)
   "Hook run when a new language is detected.
 
 This hook is abnormal in that its functions take arguments,
@@ -215,9 +216,10 @@ which LANG was detected."
 LANG is the ISO 639-1 code of the language (as a
 symbol).  BEGINNING and END are the endpoints of the region in
 which LANG was detected."
-  (let* ((typo-lang (cl-caddr (assq lang guess-language-langcodes))))
-    (when typo-lang
-      (typo-change-language typo-lang))))
+  (when (boundp 'typo-mode)
+    (let* ((typo-lang (cl-caddr (assq lang guess-language-langcodes))))
+      (when typo-lang
+        (typo-change-language typo-lang)))))
 
 ;;;###autoload
 (define-minor-mode guess-language-mode
