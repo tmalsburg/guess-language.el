@@ -56,7 +56,7 @@ In this case, use the variable ~guess-language-langcodes~ to tell guess-language
     (de . ("de_CH" "German"))))
 #+END_SRC
 
-The key of each entry in this alist is an ISO 639-1 language code.  The first element of the value is the name of the dictionary that should be used (i.e., what you would enter when setting the language via ~M-x ispell-change-dictionary~).  The second element is the name of the language setting that should be used with typo-mode (if present).  If a language is not supported by typo-mode, enter ~nil~.
+The key of each entry in this alist is an ISO 639-1 language code.  The first element of the value is the name of the dictionary that should be used (i.e., what you would enter when setting the language via ~M-x ispell-change-dictionary~).  The second element is the name of the language setting that should be used with typo-mode (if present).  If a language is not supported by typo-mode or if you are not using typo-mode, enter ~nil~.
 
 For a list of all dictionaries available for spell-checking, use the following:
 
