@@ -125,6 +125,7 @@ detected."
   "The language detected when `guess-language' was last executed.
 
 Uses ISO 639-1 to identify languages.")
+(make-variable-buffer-local 'guess-language-current-language)
 
 (defun guess-language-load-trigrams ()
   "Load language statistics."
