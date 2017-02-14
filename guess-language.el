@@ -198,10 +198,10 @@ provides three arguments that we don't need."
   nil)
 
 (defun guess-language-switch-flyspell-function (lang beginning end)
-  "Switch the Flyspell dictionary spell-checks current paragraph.
+  "Switch the Flyspell dictionary and recheck the current paragraph.
 
-This is only done if the new language is actually different from
-the previous language.  Otherwise, nothing happens.
+This is only done if the new language is different from the
+previous language.  Otherwise, nothing happens.
 
 LANG is the ISO 639-1 code of the language (as a
 symbol).  BEGINNING and END are the endpoints of the region in
