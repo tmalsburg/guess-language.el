@@ -260,6 +260,36 @@ correctly."
       (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
     (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)))
 
+(defun guess-language-mark-lines (&optional highlight)
+  "Guess language on all lines in the buffer and mark them.
+
+If HIGHLIGHT is non-nil, lines that are not in the same language
+as the overall buffer are marked red, other lines are marked
+green.  Marking is done with overlays which can be removed using
+the function `remove-overlays'.
+
+This primary purpose of this command is to aid debugging and
+improvement of the language identification algorithm.  Interface
+and implementation details may change in the future."
+  (interactive)
+  (remove-overlays)
+  (let ((buffer-lang (guess-language-buffer)))
+    (save-excursion
+      (goto-char (point-min))
+      (while (save-excursion (= 0 (forward-line 1)))
+        (unless (= 0 (string-match-p "^[[:blank:]]*$" (thing-at-point 'line)))
+          (let* ((beginning (save-excursion (beginning-of-line) (point)))
+                 (end       (save-excursion (end-of-line) (point)))
+                 (lang      (guess-language-region beginning end))
+                 (overlay   (make-overlay beginning end)))
+            (overlay-put overlay 'before-string (concat (symbol-name lang) ": "))
+            (overlay-put overlay 'face '(:background "grey90"))
+            (when highlight
+              (if (eq buffer-lang lang)
+                  (overlay-put overlay 'face '(:background "green"))
+                (overlay-put overlay 'face '(:background "red"))))))
+        (forward-line 1)))))
+
 (provide 'guess-language)
 
 ;; Local Variables:
