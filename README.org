@@ -38,9 +38,9 @@ Guess-language-mode is available through [[https://melpa.org/#/guess-language][M
 (setq guess-language-min-paragraph-length 35)
 #+END_SRC
 
-~guess-language-languages~ defines the candidate languages that should be considered.  Only include languages that you actually use to improve performance.  Languages are identified using ISO 639-1 codes (see table below).
+~guess-language-languages~ defines the candidate languages that should be considered.  It is recommended to only include languages that are actually used because this improves performance.  Languages are identified using ISO 639-1 codes (see table below).
 
-~guess-language-min-paragraph-length~ specifies the minimal length that a paragraph needs to have before guess-language-mode starts guessing.
+~guess-language-min-paragraph-length~ specifies the minimal length that a paragraph needs to have before guess-language-mode starts guessing.  Based on some informal tests texts shorter then 30 characters are not enough to give good results.  However, above 40 characters the algorithm performs well.  Of course, these numbers depend on the target language (some are easier to detect than others) and on the (number of) candidate languages that are considered.  (Open the files in the directory ~testdata~ and do ~M-x guess-language-mark-lines~ to see for yourself.)
 
 For each language, there is a default Ispell dictionary that guess-language-mode tries to use.  However, for some languages there are several dictionaries available and guess-language can’t know which one you’d like to use.  For example, there are several different dictionaries for German and for English.  If the dictionary that guess-language-mode uses by default is not present, you will get an error message like the following:
 
