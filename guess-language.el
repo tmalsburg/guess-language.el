@@ -174,6 +174,12 @@ Region starts at BEGINNING and ends at END."
         (end       (save-excursion (forward-paragraph) (point))))
     (guess-language-region beginning end)))
 
+(defun guess-language-line ()
+  "Guess the language of the current buffer line."
+  (let ((beginning (save-excursion (beginning-of-line) (point)))
+        (end       (save-excursion (end-of-line) (point))))
+    (guess-language-region beginning end)))
+
 (defun guess-language ()
   "Guess language of the current paragraph.
 
