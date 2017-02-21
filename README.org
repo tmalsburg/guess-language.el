@@ -110,3 +110,27 @@ Activate ~guess-language-mode~ in the buffer in which you want to use it.  To ac
 #+BEGIN_SRC elisp
 (add-hook 'text-mode-hook (lambda () (guess-language-mode 1)))
 #+END_SRC
+
+*** Changing the voice used by the Festival text-to-speech system
+
+The code snipped below illustrates how guess-language can be configured to automatically change the voice used by the text-to-speech engine [[http://www.cstr.ed.ac.uk/projects/festival/][Festival]] (install [[https://www.emacswiki.org/emacs/festival.el][festival.el]] for this to work):
+
+#+BEGIN_SRC elisp
+(defun guess-language-switch-festival-function (lang beginning end)
+  "Switch the voice used by festival.
+
+LANG is the ISO 639-1 code of the language (as a
+symbol).  BEGINNING and END are the endpoints of the region in
+which LANG was detected but these are ignored."
+  (when (and (featurep 'festival)
+             (festivalp))
+    (pcase lang
+      ('en (festival-voice-english-female))
+      ('de (festival-voice-german-female)))))
+
+(add-hook 'guess-language-after-detection-functions #'guess-language-switch-festival-function)
+#+END_SRC
+
+The ~pcase~ needs to be modified to use the voiced that are installed on your system.  Refer to the documentation of Festival for details.
+
+
