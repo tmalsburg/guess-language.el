@@ -149,6 +149,20 @@ Uses ISO 639-1 to identify languages.")
          for regexp = (concat "\\(" regexp "\\)")
          collect (cons (car lang) regexp))))
 
+(defun guess-language-backward-paragraph ()
+  "Uses whatever method for moving to the previous paragraph is
+most appropriate given the buffer mode."
+  (if (eq major-mode 'org-mode)
+      (org-backward-paragraph)
+    (backward-paragraph)))
+
+(defun guess-language-forward-paragraph ()
+  "Uses whatever method for moving to the previous paragraph is
+most appropriate given the buffer mode."
+  (if (eq major-mode 'org-mode)
+      (org-forward-paragraph)
+    (forward-paragraph)))
+
 (defun guess-language-region (beginning end)
   "Guess language in the specified region.
 
@@ -170,8 +184,8 @@ Region starts at BEGINNING and ends at END."
 
 (defun guess-language-paragraph ()
   "Guess the language of the current paragraph."
-  (let ((beginning (save-excursion (backward-paragraph) (point)))
-        (end       (save-excursion (forward-paragraph) (point))))
+  (let ((beginning (save-excursion (guess-language-backward-paragraph) (point)))
+        (end       (save-excursion (guess-language-forward-paragraph) (point))))
     (guess-language-region beginning end)))
 
 (defun guess-language-line ()
@@ -188,8 +202,8 @@ Calls the functions in
 switch the dictionary of the spell checker and do other useful
 things like changing the keyboard layout or input method."
   (interactive)
-  (let ((beginning (save-excursion (backward-paragraph) (point)))
-        (end       (save-excursion (forward-paragraph)  (point))))
+  (let ((beginning (save-excursion (guess-language-backward-paragraph) (point)))
+        (end       (save-excursion (guess-language-forward-paragraph)  (point))))
     (when (> (- end beginning) guess-language-min-paragraph-length)
       (let ((lang (guess-language-region beginning end)))
         (run-hook-with-args 'guess-language-after-detection-functions lang beginning end)
