@@ -153,14 +153,24 @@ Uses ISO 639-1 to identify languages.")
   "Uses whatever method for moving to the previous paragraph is
 most appropriate given the buffer mode."
   (if (eq major-mode 'org-mode)
-      (org-backward-paragraph)
+      ;; When in list, go to the beginning of the top-level list:
+      (if (org-in-item-p)
+          (progn
+            (while (org-in-item-p)
+              (org-beginning-of-item-list)
+              (forward-line -1))
+            (forward-line 1))
+        (org-backward-paragraph))
     (backward-paragraph)))
 
 (defun guess-language-forward-paragraph ()
   "Uses whatever method for moving to the previous paragraph is
 most appropriate given the buffer mode."
   (if (eq major-mode 'org-mode)
-      (org-forward-paragraph)
+      (if (org-in-item-p)
+          (while (org-in-item-p)
+            (org-end-of-item-list))
+        (org-forward-paragraph))
     (forward-paragraph)))
 
 (defun guess-language-region (beginning end)
