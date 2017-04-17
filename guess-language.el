@@ -156,10 +156,12 @@ most appropriate given the buffer mode."
       ;; When in list, go to the beginning of the top-level list:
       (if (org-in-item-p)
           (progn
-            (while (org-in-item-p)
+            (while (and (save-excursion (= (forward-line -1) 0))
+                        (org-in-item-p))
               (org-beginning-of-item-list)
               (forward-line -1))
-            (forward-line 1))
+            (unless (org-in-item-p)
+              (forward-line 1)))
         (org-backward-paragraph))
     (backward-paragraph)))
 
