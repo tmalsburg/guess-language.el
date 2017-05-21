@@ -169,11 +169,15 @@ most appropriate given the buffer mode."
   "Uses whatever method for moving to the previous paragraph is
 most appropriate given the buffer mode."
   (if (eq major-mode 'org-mode)
-      (if (org-in-item-p)
-          (while (org-in-item-p)
-            (org-end-of-item-list))
-        (org-forward-paragraph))
-    (forward-paragraph)))
+      (if (org-list-struct)
+          (let ((last-pos nil)
+                (new-pos (car (last (first (last (org-list-struct)))))))
+            (while (not (eq last-pos new-pos))
+              (setq last-pos new-pos)
+              (setq new-pos (car (last (first (last (org-list-struct)))))))
+            (goto-char new-pos))
+            (org-forward-paragraph))
+        (forward-paragraph)))
 
 (defun guess-language-region (beginning end)
   "Guess language in the specified region.
