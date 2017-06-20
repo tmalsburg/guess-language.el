@@ -121,6 +121,11 @@ detected."
   :type 'hook
   :group 'guess-language)
 
+(defcustom guess-language-trigrams-directory (file-name-directory (find-library-name "guess-language"))
+  "Directory where trigrams are stored.
+
+By default it's the same directory where this module is installed.")
+
 (defvar guess-language-current-language nil
   "The language detected when `guess-language' was last executed.
 
@@ -131,9 +136,8 @@ Uses ISO 639-1 to identify languages.")
   "Load language statistics."
   (cl-loop
    for lang in guess-language-languages
-   for basedir = (file-name-directory (find-library-name "guess-language"))
-   for fname = (let ((dir1 (expand-file-name (symbol-name lang) basedir))
-                     (dir2 (expand-file-name (symbol-name lang) (expand-file-name "trigrams" basedir))))
+   for fname = (let ((dir1 (expand-file-name (symbol-name lang) guess-language-trigrams-directory))
+                     (dir2 (expand-file-name (symbol-name lang) (expand-file-name "trigrams" guess-language-trigrams-directory))))
                  (if (file-exists-p dir1) dir1 dir2))
    for trigrams = (with-temp-buffer
                     (insert-file-contents fname)
