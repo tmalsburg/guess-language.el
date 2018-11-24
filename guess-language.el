@@ -158,30 +158,19 @@ Uses ISO 639-1 to identify languages.")
 most appropriate given the buffer mode."
   (if (eq major-mode 'org-mode)
       ;; When in list, go to the beginning of the top-level list:
-      (if (org-in-item-p)
-          (progn
-            (while (and (save-excursion (= (forward-line -1) 0))
-                        (org-in-item-p))
-              (org-beginning-of-item-list)
-              (forward-line -1))
-            (unless (org-in-item-p)
-              (forward-line 1)))
+      (if (org-in-item-p) 
+          (org-beginning-of-item-list)
         (org-backward-paragraph))
     (backward-paragraph)))
 
 (defun guess-language-forward-paragraph ()
-  "Uses whatever method for moving to the previous paragraph is
+  "Uses whatever method for moving to the next paragraph is
 most appropriate given the buffer mode."
   (if (eq major-mode 'org-mode)
-      (if (org-list-struct)
-          (let ((last-pos nil)
-                (new-pos (car (last (first (last (org-list-struct)))))))
-            (while (not (eq last-pos new-pos))
-              (setq last-pos new-pos)
-              (setq new-pos (car (last (first (last (org-list-struct)))))))
-            (goto-char new-pos))
-            (org-forward-paragraph))
-        (forward-paragraph)))
+      (if (org-in-item-p)
+          (org-end-of-item-list)
+        (org-forward-paragraph))
+    (forward-paragraph)))
 
 (defun guess-language-region (beginning end)
   "Guess language in the specified region.
@@ -227,8 +216,10 @@ things like changing the keyboard layout or input method."
     (when (> (- end beginning) guess-language-min-paragraph-length)
       (let ((lang (guess-language-region beginning end)))
         (run-hook-with-args 'guess-language-after-detection-functions lang beginning end)
-        (setq guess-language-current-language lang)))))
+        (setq guess-language-current-language lang)
+        (message (format "Detected language: %s" (caddr (assoc lang guess-language-langcodes))))))))
 
+  (setq lang 'en)
 (defun guess-language-function (beginning end doublon)
   "Wrapper for `guess-language' because `flyspell-incorrect-hook'
 provides three arguments that we don't need."
