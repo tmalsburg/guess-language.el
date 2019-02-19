@@ -219,7 +219,6 @@ things like changing the keyboard layout or input method."
         (setq guess-language-current-language lang)
         (message (format "Detected language: %s" (caddr (assoc lang guess-language-langcodes))))))))
 
-  (setq lang 'en)
 (defun guess-language-function (beginning end doublon)
   "Wrapper for `guess-language' because `flyspell-incorrect-hook'
 provides three arguments that we don't need."
