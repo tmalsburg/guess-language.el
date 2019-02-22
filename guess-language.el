@@ -257,6 +257,12 @@ which LANG was detected."
       (when typo-lang
         (typo-change-language typo-lang)))))
 
+(defun guess-language-flyspell-buffer-wrapper (orig-fun &rest args)
+  "Do not guess language when an unknown word is encountered
+during `flyspell-buffer'."
+  (let ((flyspell-incorrect-hook nil))
+    (apply orig-fun args)))
+
 ;;;###autoload
 (define-minor-mode guess-language-mode
   "Toggle guess-language mode.
@@ -281,8 +287,11 @@ correctly."
   :global nil
   :group 'guess-language
   (if guess-language-mode
-      (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
-    (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)))
+      (progn
+        (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
+        (advice-add 'flyspell-buffer :around #'guess-language-flyspell-buffer-wrapper))
+    (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)
+    (advice-remove 'flyspell-buffer #'guess-language-flyspell-buffer-wrapper)))
 
 (defun guess-language-mark-lines (&optional highlight)
   "Guess language on all lines in the buffer and mark them.
