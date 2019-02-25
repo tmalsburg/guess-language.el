@@ -1,9 +1,11 @@
-;;; guess-language.el --- Robust automatic language detection
+;;; guess-language.el --- Robust automatic language detection  -*- lexical-binding:t -*-
+
+;; Copyright (C) 2019  Free Software Foundation, Inc.
 
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
 ;; Version: 0.0.1
-;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
+;; Package-Requires: ((cl-lib "0.5") (emacs "24") (advice "0.1"))
 ;; URL: https://github.com/tmalsburg/guess-language.el
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -64,8 +66,7 @@ Arabic (ar),  Czech (cs),  Danish (da),  Dutch (nl),  English (en),
 Finnish (fi),  French (fr),  German (de),  Italian (it),
 Norwegian (nb),  Polish (pl),  Portuguese (pt),  Russian (ru),
 Slovak (sk),  Slovenian (sl),  Spanish (es),  Swedish (sv)"
-  :type '(repeat symbol)
-  :group 'guess-language)
+  :type '(repeat symbol))
 
 (defcustom guess-language-min-paragraph-length 40
   "Minimum number of characters in paragraph.
@@ -73,10 +74,9 @@ Slovak (sk),  Slovenian (sl),  Spanish (es),  Swedish (sv)"
 When a paragraph is shorter than this value (in characters),
 guess-language doesn't do anything because there is likely too
 little material to reliably guess the language."
-  :type 'integer
-  :group 'guess-language)
+  :type 'integer)
 
-(defvar guess-language-regexps nil
+(defvar guess-language--regexps nil
   "The regular expressions that are used to count trigrams.")
 
 (defcustom guess-language-langcodes
@@ -107,8 +107,7 @@ language with `ispell-change-dictionary').  The second element is
 the name of the language setting that should be used with
 typo-mode.  If a language is not supported by typo-mode, that
 value is nil."
-  :type '(alist :key-type symbol :value-type list)
-  :group 'guess-language)
+  :type '(alist :key-type symbol :value-type list))
 
 (defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function
                                                           #'guess-language-switch-typo-mode-function)
@@ -118,8 +117,7 @@ This hook is abnormal in that its functions take arguments,
 namely a symbol indicating the language that was detected and the
 beginning and end of the region in which the language was
 detected."
-  :type 'hook
-  :group 'guess-language)
+  :type 'hook)
 
 (defcustom guess-language-trigrams-directory (file-name-directory (find-library-name "guess-language"))
   "Directory where trigrams are stored.
@@ -146,17 +144,16 @@ Uses ISO 639-1 to identify languages.")
 
 (defun guess-language-compile-regexps ()
   "Compile regular expressions used for guessing language."
-  (setq guess-language-regexps
+  (setq guess-language--regexps
         (cl-loop
          for lang in (guess-language-load-trigrams)
-         for regexp = (mapconcat 'identity (cdr lang) "\\)\\|\\(")
-         for regexp = (concat "\\(" regexp "\\)")
+         for regexp = (mapconcat 'identity (cdr lang) "\\|")
          collect (cons (car lang) regexp))))
 
 (defun guess-language-backward-paragraph ()
   "Uses whatever method for moving to the previous paragraph is
 most appropriate given the buffer mode."
-  (if (eq major-mode 'org-mode)
+  (if (derived-mode-p 'org-mode)
       ;; When in list, go to the beginning of the top-level list:
       (if (org-in-item-p) 
           (org-beginning-of-item-list)
@@ -166,7 +163,7 @@ most appropriate given the buffer mode."
 (defun guess-language-forward-paragraph ()
   "Uses whatever method for moving to the next paragraph is
 most appropriate given the buffer mode."
-  (if (eq major-mode 'org-mode)
+  (if (derived-mode-p 'org-mode)
       (if (org-in-item-p)
           (org-end-of-item-list)
         (org-forward-paragraph))
@@ -177,12 +174,12 @@ most appropriate given the buffer mode."
 
 Region starts at BEGINNING and ends at END."
   (interactive "*r")
-  (unless guess-language-regexps
+  (unless guess-language--regexps
     (guess-language-compile-regexps))
-  (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language-regexps))
+  (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language--regexps))
     (guess-language-compile-regexps))
   (let ((tally (cl-loop
-                for lang in guess-language-regexps
+                for lang in guess-language--regexps
                 for regexp = (cdr lang)
                 collect (cons (car lang) (how-many regexp beginning end)))))
     (car (cl-reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
@@ -219,7 +216,7 @@ things like changing the keyboard layout or input method."
         (setq guess-language-current-language lang)
         (message (format "Detected language: %s" (caddr (assoc lang guess-language-langcodes))))))))
 
-(defun guess-language-function (beginning end doublon)
+(defun guess-language-function (_beginning _end _doublon)
   "Wrapper for `guess-language' because `flyspell-incorrect-hook'
 provides three arguments that we don't need."
   (guess-language)
@@ -246,16 +243,15 @@ which LANG was detected."
             (flyspell-large-region 1))
         (flyspell-region beginning end)))))
 
-(defun guess-language-switch-typo-mode-function (lang beginning end)
+(defun guess-language-switch-typo-mode-function (lang _beginning _end)
   "Switch the language used by typo-mode.
 
 LANG is the ISO 639-1 code of the language (as a
-symbol).  BEGINNING and END are the endpoints of the region in
-which LANG was detected."
-  (when (boundp 'typo-mode)
+symbol).  _BEGINNING and _END are the endpoints of the region in
+which LANG was detected (not used)."
+  (when (boundp-and-true-p 'typo-mode)
     (let* ((typo-lang (cl-caddr (assq lang guess-language-langcodes))))
-      (when typo-lang
-        (typo-change-language typo-lang)))))
+      (typo-change-language typo-lang))))
 
 (defun guess-language-flyspell-buffer-wrapper (orig-fun &rest args)
   "Do not guess language when an unknown word is encountered
@@ -285,7 +281,6 @@ correctly."
   ;; The indicator for the mode line.
   :lighter (:eval (format " (%s)" (or guess-language-current-language "default")))
   :global nil
-  :group 'guess-language
   (if guess-language-mode
       (progn
         (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
