@@ -1,0 +1,4 @@
+The data files in this directory contain for each language the 300
+most frequent letter trigrams in that language ordered by frequency in
+descending order.  These files are slightly modified versions of the
+data files used in the KDE project’s Sonnet spell checker.
