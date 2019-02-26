@@ -122,7 +122,8 @@ detected."
 (defcustom guess-language-trigrams-directory (file-name-directory (find-library-name "guess-language"))
   "Directory where trigrams are stored.
 
-By default it's the same directory where this module is installed.")
+By default it's the same directory where this module is installed."
+  :type '(file :must-match t))
 
 (defvar guess-language-current-language nil
   "The language detected when `guess-language' was last executed.
