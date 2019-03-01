@@ -250,7 +250,7 @@ which LANG was detected."
 LANG is the ISO 639-1 code of the language (as a
 symbol).  _BEGINNING and _END are the endpoints of the region in
 which LANG was detected (not used)."
-  (when (bound-and-true-p 'typo-mode)
+  (when (bound-and-true-p typo-mode)
     (let* ((typo-lang (cl-caddr (assq lang guess-language-langcodes))))
       (typo-change-language typo-lang))))
 
