@@ -159,7 +159,9 @@ most appropriate given the buffer mode."
       (if (org-in-item-p) 
           (org-beginning-of-item-list)
         (org-backward-paragraph))
-    (backward-paragraph)))
+    (backward-paragraph)
+    (when (looking-at-p "[[:space:]]")
+      (forward-whitespace 1))))
 
 (defun guess-language-forward-paragraph ()
   "Uses whatever method for moving to the next paragraph is
