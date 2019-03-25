@@ -159,7 +159,9 @@ most appropriate given the buffer mode."
       (if (org-in-item-p) 
           (org-beginning-of-item-list)
         (org-backward-paragraph))
-    (backward-paragraph)))
+    (backward-paragraph)
+    (when (looking-at-p "[[:space:]]")
+      (forward-whitespace 1))))
 
 (defun guess-language-forward-paragraph ()
   "Uses whatever method for moving to the next paragraph is
@@ -238,11 +240,17 @@ which LANG was detected."
          (new-dictionary (cadr (assq lang guess-language-langcodes))))
     (unless (string= old-dictionary new-dictionary)
       (ispell-change-dictionary new-dictionary)
-      (let ((flyspell-issue-welcome-flag nil)
-            (flyspell-issue-message-flag nil)
-            (flyspell-incorrect-hook nil)
-            (flyspell-large-region 1))
-        (flyspell-region beginning end)))))
+      ;; Flyspell the region with the new dictionary after we return
+      ;; from flyspell-incorrect-hook that called us. Otherwise, the
+      ;; word at point is highlighted as incorrect even if it is
+      ;; correct according to the new dictionary.
+      (run-at-time 0 nil
+                   (lambda ()
+                     (let ((flyspell-issue-welcome-flag nil)
+                           (flyspell-issue-message-flag nil)
+                           (flyspell-incorrect-hook nil)
+                           (flyspell-large-region 1))
+                       (flyspell-region beginning end)))))))
 
 (defun guess-language-switch-typo-mode-function (lang _beginning _end)
   "Switch the language used by typo-mode.
