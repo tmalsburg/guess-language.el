@@ -250,7 +250,8 @@ which LANG was detected."
                            (flyspell-issue-message-flag nil)
                            (flyspell-incorrect-hook nil)
                            (flyspell-large-region 1))
-                       (flyspell-region beginning end)))))))
+                       (with-local-quit
+                         (flyspell-region beginning end))))))))
 
 (defun guess-language-switch-typo-mode-function (lang _beginning _end)
   "Switch the language used by typo-mode.
