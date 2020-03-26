@@ -147,8 +147,8 @@ Uses ISO 639-1 to identify languages.")
   "Compile regular expressions used for guessing language."
   (setq guess-language--regexps
         (cl-loop
-         for lang in (guess-language-load-trigrams)
-         collect (cons (car lang) (regexp-opt (cdr lang))))))
+         for (lang . regexps) in (guess-language-load-trigrams)
+         collect (cons lang (regexp-opt regexps)))))
 
 (defun guess-language-backward-paragraph ()
   "Uses whatever method for moving to the previous paragraph is
@@ -181,9 +181,8 @@ Region starts at BEGINNING and ends at END."
   (when (cl-set-exclusive-or guess-language-languages (mapcar #'car guess-language--regexps))
     (guess-language-compile-regexps))
   (let ((tally (cl-loop
-                for lang in guess-language--regexps
-                for regexp = (cdr lang)
-                collect (cons (car lang) (how-many regexp beginning end)))))
+                for (lang . regexp) in guess-language--regexps
+                collect (cons lang (how-many regexp beginning end)))))
     (car (cl-reduce (lambda (x y) (if (> (cdr x) (cdr y)) x y)) tally))))
 
 (defun guess-language-buffer ()
