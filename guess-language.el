@@ -148,8 +148,7 @@ Uses ISO 639-1 to identify languages.")
   (setq guess-language--regexps
         (cl-loop
          for lang in (guess-language-load-trigrams)
-         for regexp = (mapconcat 'identity (cdr lang) "\\|")
-         collect (cons (car lang) regexp))))
+         collect (cons (car lang) (regexp-opt (cdr lang))))))
 
 (defun guess-language-backward-paragraph ()
   "Uses whatever method for moving to the previous paragraph is
