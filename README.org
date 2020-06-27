@@ -68,25 +68,26 @@ For a list of all dictionaries available for spell-checking, use the following:
 
 Languages that are currently supported by guess-language-mode:
 
-| Language   | IDO 639-1 code | Default Ispell dictionary | Default typo-mode setting |
-|------------+----------------+---------------------------+---------------------------|
-| Arabic     | ~ar~           | ar                        |                           |
-| Czech      | ~cs~           | czech                     | Czech                     |
-| Danish     | ~da~           | dansk                     |                           |
-| Dutch      | ~nl~           | nederlands                |                           |
-| English    | ~en~           | en                        | English                   |
-| Finnish    | ~fi~           | finnish                   | Finnish                   |
-| French     | ~fr~           | francais                  | French                    |
-| German     | ~de~           | de                        | German                    |
-| Italian    | ~it~           | italiano                  | Italian                   |
-| Norwegian  | ~nb~           | norsk                     |                           |
-| Polish     | ~pl~           | polish                    |                           |
-| Portuguese | ~pt~           | portuguese                |                           |
-| Russian    | ~ru~           | russian                   | Russian                   |
-| Slovak     | ~sk~           | slovak                    |                           |
-| Slovenian  | ~sl~           | slovenian                 |                           |
-| Spanish    | ~es~           | spanish                   |                           |
-| Swedish    | ~sv~           | svenska                   |                           |
+| Language           | IDO 639-1 code | Default Ispell dictionary | Default typo-mode setting        |
+|--------------------+----------------+---------------------------+----------------------------------|
+| Arabic             | ~ar~           | ar                        |                                  |
+| Czech              | ~cs~           | czech                     | Czech                            |
+| Danish             | ~da~           | dansk                     |                                  |
+| Dutch              | ~nl~           | nederlands                |                                  |
+| English            | ~en~           | en                        | English                          |
+| Finnish            | ~fi~           | finnish                   | Finnish                          |
+| French             | ~fr~           | francais                  | French                           |
+| German             | ~de~           | de                        | German                           |
+| Italian            | ~it~           | italiano                  | Italian                          |
+| Norwegian          | ~nb~           | norsk                     |                                  |
+| Polish             | ~pl~           | polish                    |                                  |
+| Portuguese         | ~pt~           | portuguese                |                                  |
+| Russian            | ~ru~           | russian                   | Russian                          |
+| Serbian (Cyrillic) | ~sk~           | serbian                   | German (most similar to Serbian) |
+| Slovak             | ~sk~           | slovak                    |                                  |
+| Slovenian          | ~sl~           | slovenian                 |                                  |
+| Spanish            | ~es~           | spanish                   |                                  |
+| Swedish            | ~sv~           | svenska                   |                                  |
 
 *** Custom functions to be run when a new language is detected
 
