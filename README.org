@@ -137,4 +137,8 @@ which LANG was detected but these are ignored."
 
 The ~pcase~ needs to be modified to use the voiced that are installed on your system.  Refer to the documentation of Festival for details.
 
+** Notes
+
+- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  This is not idea, since some Cyrillic trigrams transliterated to 4-grams in Latin.  We truncated those but as a result have two duplicates (~"e n"~ and ~"ra "~).  Not ideal but results are probably still robust.  It would be good, though, if someone could compute proper Latin trigrams one day.
+
 
