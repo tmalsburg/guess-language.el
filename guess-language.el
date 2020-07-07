@@ -91,14 +91,14 @@ little material to reliably guess the language."
     (it     . ("italiano"   "Italian"))
     (nb     . ("norsk"      nil))
     (nl     . ("nederlands" nil))
-    (pl     . ("polish"     nil))
+    (pl     . ("polish"     "Polish"))
     (pt     . ("portuguese" nil))
     (ru     . ("russian"    "Russian"))
     (sk     . ("slovak"     nil))
     (sl     . ("slovenian"  nil))
     (sr     . ("serbian"    "Serbian"))
     (sr_LAT . ("sr-lat"     "Serbian"))
-    (sv     . ("svenska"    nil)))
+    (sv     . ("svenska"    "Swedish")))
   "Language codes for spell-checker and typo-mode.
 
 The key is a symbol specifying the ISO 639-1 code of the
