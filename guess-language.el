@@ -96,8 +96,8 @@ little material to reliably guess the language."
     (ru     . ("russian"    "Russian"))
     (sk     . ("slovak"     nil))
     (sl     . ("slovenian"  nil))
-    (sr     . ("serbian"    "German"))
-    (sr_LAT . ("sr-lat"    "German"))
+    (sr     . ("serbian"    "Serbian"))
+    (sr_LAT . ("sr-lat"     "Serbian"))
     (sv     . ("svenska"    nil)))
   "Language codes for spell-checker and typo-mode.
 
