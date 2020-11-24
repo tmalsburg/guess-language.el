@@ -4,6 +4,8 @@
 
 ;; Author: Titus von der Malsburg <malsburg@posteo.de>
 ;; Maintainer: Titus von der Malsburg <malsburg@posteo.de>
+;; Description: Robust automatic language detection
+;; Keywords: wp
 ;; Version: 0.0.1
 ;; Package-Requires: ((cl-lib "0.5") (emacs "24"))
 ;; URL: https://github.com/tmalsburg/guess-language.el
