@@ -40,12 +40,12 @@
 ;; such that users can do things like changing the input method when
 ;; needed.
 ;;
-;; The detection algorithm is based on counts of character
-;; trigrams.  At this time, supported languages are Arabic, Czech,
-;; Danish, Dutch, English, Finnish, French, German, Italian,
-;; Norwegian, Polish, Portuguese, Russian, Slovak, Slovenian, Spanish,
-;; Swedish.  Adding further languages is very easy and this package
-;; already contains language statistics for 49 additional languages.
+;; The detection algorithm is based on counts of character trigrams.
+;; At this time, supported languages are Arabic, Czech, Danish, Dutch,
+;; English, Finnish, French, German, Italian, Norwegian, Polish,
+;; Portuguese, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish.
+;; Adding further languages is very easy and this package already
+;; contains language statistics for 49 additional languages.
 
 ;;; Code:
 

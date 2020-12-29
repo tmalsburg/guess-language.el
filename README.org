@@ -139,7 +139,7 @@ The ~pcase~ needs to be modified to use the voices that are installed on your sy
 
 *** Changing the language of Synosaurus
 
-[[https://github.com/hpdeifel/synosaurus][Synosaurus]] is an Emacs package providing access to a German or English thesaurus.  Using the code below the language of the thesaurus is automatically changed to the language of the current paragraph.  Refer to the documentation of Festival for details.
+[[https://github.com/hpdeifel/synosaurus][Synosaurus]] is an Emacs package providing access to a German or English thesaurus.  Using the code below the language of the thesaurus is automatically changed to the language of the current paragraph.  Refer to the documentation of Synosaurus for details.
 
 #+BEGIN_SRC elisp
 (defun guess-language-switch-synosaurus (lang beginning end)
@@ -158,6 +158,6 @@ which LANG was detected.  These are ignored."
 
 ** Notes
 
-- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  This is not idea, since some Cyrillic trigrams transliterated to 4-grams in Latin.  We truncated those but as a result have two duplicates (~"e n"~ and ~"ra "~).  Not ideal but results are probably still robust.  It would be good, though, if someone could compute proper Latin trigrams one day.
+- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  Since some Cyrillic trigrams transliterated to 4-grams in Latin.  We truncated those but as a result have two duplicates (~"e n"~ and ~"ra "~).  Not ideal but results are probably still robust.  It would be good, though, if someone could compute proper Latin trigrams one day.
 
 
