@@ -42,10 +42,10 @@
 ;;
 ;; The detection algorithm is based on counts of character trigrams.
 ;; At this time, supported languages are Arabic, Czech, Danish, Dutch,
-;; English, Finnish, French, German, Italian, Norwegian, Polish,
-;; Portuguese, Russian, Serbian, Slovak, Slovenian, Spanish, Swedish.
-;; Adding further languages is very easy and this package already
-;; contains language statistics for 49 additional languages.
+;; English, Esperanto, Finnish, French, German, Italian, Norwegian,
+;; Polish, Portuguese, Russian, Serbian, Slovak, Slovenian, Spanish, and
+;; Swedish. Adding further languages is very easy and this package
+;; already contains language statistics for 49 additional languages.
 
 ;;; Code:
 
@@ -65,9 +65,10 @@ dictionary, input methods, etc."
 
 Uses ISO 639-1 identifiers.  Currently supported languages are:
 Arabic (ar),  Czech (cs),  Danish (da),  Dutch (nl),  English (en),
-Finnish (fi),  French (fr),  German (de),  Italian (it),
-Norwegian (nb),  Polish (pl),  Portuguese (pt),  Russian (ru),
-Slovak (sk),  Slovenian (sl),  Spanish (es),  Swedish (sv)"
+Esperanto (eo),  Finnish (fi),  French (fr),  German (de),
+Italian (it),  Norwegian (nb),  Polish (pl),  Portuguese (pt),
+Russian (ru), Slovak (sk),  Slovenian (sl),  Spanish (es),  and
+Swedish (sv)"
   :type '(repeat symbol))
 
 (defcustom guess-language-min-paragraph-length 40
@@ -87,6 +88,7 @@ little material to reliably guess the language."
     (da     . ("dansk"      nil))
     (de     . ("de"         "German"))
     (en     . ("en"         "English"))
+    (eo     . ("eo"         "English"))
     (es     . ("spanish"    nil))
     (fi     . ("finnish"    "Finnish"))
     (fr     . ("francais"   "French"))
