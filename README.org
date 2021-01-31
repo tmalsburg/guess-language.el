@@ -159,4 +159,4 @@ which LANG was detected.  These are ignored."
 
 ** Notes
 
-- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  Since some Cyrillic trigrams transliterate to 4-grams in Latin, we truncated those but as a result have two duplicates, ~e n~ and ~ra ~.  Not ideal but the results are probably still robust enough.  Nonetheless, it would be good if someone could compute proper Latin trigrams one day.
+- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  Since some Cyrillic trigrams transliterate to 4-grams in Latin, we truncated those but as a result have two duplicates, ~e n~ and ~ra\nbsp{}~.  Not ideal but the results are probably still robust enough.  Nonetheless, it would be good if someone could compute proper Latin trigrams one day.
