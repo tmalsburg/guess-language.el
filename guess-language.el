@@ -248,14 +248,14 @@ which LANG was detected."
       ;; from flyspell-incorrect-hook that called us. Otherwise, the
       ;; word at point is highlighted as incorrect even if it is
       ;; correct according to the new dictionary.
-      (run-at-time 0 nil
-                   (lambda ()
-                     (let ((flyspell-issue-welcome-flag nil)
-                           (flyspell-issue-message-flag nil)
-                           (flyspell-incorrect-hook nil)
-                           (flyspell-large-region 1))
-                       (with-local-quit
-                         (flyspell-region beginning end))))))))
+      (run-with-idle-timer 0 nil
+                           (lambda ()
+                             (let ((flyspell-issue-welcome-flag nil)
+                                   (flyspell-issue-message-flag nil)
+                                   (flyspell-incorrect-hook nil)
+                                   (flyspell-large-region 1))
+                               (with-local-quit
+                                 (flyspell-region beginning end))))))))
 
 (defun guess-language-switch-typo-mode-function (lang _beginning _end)
   "Switch the language used by typo-mode.
