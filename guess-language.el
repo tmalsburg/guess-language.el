@@ -40,12 +40,12 @@
 ;; such that users can do things like changing the input method when
 ;; needed.
 ;;
-;; The detection algorithm is based on counts of character trigrams.
-;; At this time, supported languages are Arabic, Czech, Danish, Dutch,
-;; English, Esperanto, Finnish, French, German, Italian, Norwegian,
-;; Polish, Portuguese, Russian, Serbian, Slovak, Slovenian, Spanish, and
-;; Swedish. Adding further languages is very easy and this package
-;; already contains language statistics for 49 additional languages.
+;; The detection algorithm is based on counts of character trigrams. At this
+;; time, supported languages are Arabic, Czech, Danish, Dutch, English,
+;; Esperanto, Finnish, French, German, Italian, Norwegian, Polish, Portuguese,
+;; Russian, Serbian, Slovak, Slovenian, Spanish, Swedish and Vietnamese. Adding
+;; further languages is very easy and this package already contains language
+;; statistics for 49 additional languages.
 
 ;;; Code:
 
@@ -63,12 +63,12 @@ dictionary, input methods, etc."
 (defcustom guess-language-languages '(en de fr)
   "List of languages that should be considered.
 
-Uses ISO 639-1 identifiers.  Currently supported languages are:
-Arabic (ar),  Czech (cs),  Danish (da),  Dutch (nl),  English (en),
-Esperanto (eo),  Finnish (fi),  French (fr),  German (de),
-Italian (it),  Norwegian (nb),  Polish (pl),  Portuguese (pt),
-Russian (ru), Slovak (sk),  Slovenian (sl),  Spanish (es),  and
-Swedish (sv)"
+Uses ISO 639-1 identifiers. Currently supported languages are:
+Arabic (ar), Czech (cs), Danish (da), Dutch (nl), English (en),
+Esperanto (eo), Finnish (fi), French (fr), German (de),
+Italian (it), Norwegian (nb), Polish (pl), Portuguese (pt),
+Russian (ru), Slovak (sk), Slovenian (sl), Spanish (es),
+Swedish (sv) and Vietnamese (vi)."
   :type '(repeat symbol))
 
 (defcustom guess-language-min-paragraph-length 40
