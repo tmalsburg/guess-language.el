@@ -102,7 +102,8 @@ little material to reliably guess the language."
     (sl     . ("slovenian"  nil))
     (sr     . ("serbian"    "Serbian"))
     (sr_LAT . ("sr-lat"     "Serbian"))
-    (sv     . ("svenska"    "Swedish")))
+    (sv     . ("svenska"    "Swedish"))
+    (vi     . ("viet"       nil)))
   "Language codes for spell-checker and typo-mode.
 
 The key is a symbol specifying the ISO 639-1 code of the

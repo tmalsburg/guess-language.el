@@ -90,6 +90,7 @@ Languages that are currently supported by guess-language-mode:
 | Slovenian          | ~sl~           | slovenian                 |                                  |
 | Spanish            | ~es~           | spanish                   |                                  |
 | Swedish            | ~sv~           | svenska                   |                                  |
+| Vietnamese         | ~vi~           | viet                      |                                  |
 
 *** Custom functions to be run when a new language is detected
 

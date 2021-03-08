@@ -34,3 +34,5 @@ sk: Jedná sa o krátky text písaný na účely testovania a preložené do nie
 sl: To je kratko besedilo, napisano za testiranje in prevedena v več jezikov, ki uporabljajo Google Translate.
 
 sv: Detta är en kort text skriven för teständamål och översatt till flera språk med Google Translate.
+
+vi: Đây là một văn bản ngắn được viết cho mục đích thử nghiệm và được dịch sang một số ngôn ngữ bằng Google Dịch.
