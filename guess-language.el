@@ -138,6 +138,9 @@ By default it's the same directory where this module is installed."
 Uses ISO 639-1 to identify languages.")
 (make-variable-buffer-local 'guess-language-current-language)
 
+(defvar-local guess-language--post-command-h #'ignore
+  "Function called by `guess-language--post-command-h'.")
+
 (defun guess-language-load-trigrams ()
   "Load language statistics."
   (cl-loop
@@ -232,6 +235,13 @@ provides three arguments that we don't need."
   ;; words:
   nil)
 
+(defun guess-language--post-command-h ()
+  "The `post-command-hook' used by guess-language.
+
+Used by `guess-language-switch-flyspell-function' to recheck the
+spelling of the current paragraph after switching dictionary."
+  (funcall guess-language--post-command-h))
+
 (defun guess-language-switch-flyspell-function (lang beginning end)
   "Switch the Flyspell dictionary and recheck the current paragraph.
 
@@ -249,14 +259,15 @@ which LANG was detected."
       ;; from flyspell-incorrect-hook that called us. Otherwise, the
       ;; word at point is highlighted as incorrect even if it is
       ;; correct according to the new dictionary.
-      (run-with-idle-timer 0 nil
-                           (lambda ()
-                             (let ((flyspell-issue-welcome-flag nil)
-                                   (flyspell-issue-message-flag nil)
-                                   (flyspell-incorrect-hook nil)
-                                   (flyspell-large-region 1))
-                               (with-local-quit
-                                 (flyspell-region beginning end))))))))
+      (setq guess-language--post-command-h
+            (lambda ()
+              (setq guess-language--post-command-h #'ignore)
+              (let ((flyspell-issue-welcome-flag nil)
+                    (flyspell-issue-message-flag nil)
+                    (flyspell-incorrect-hook nil)
+                    (flyspell-large-region 1))
+                (with-local-quit
+                  (flyspell-region beginning end))))))))
 
 (defun guess-language-switch-typo-mode-function (lang _beginning _end)
   "Switch the language used by typo-mode.
@@ -299,8 +310,11 @@ correctly."
   (if guess-language-mode
       (progn
         (add-hook 'flyspell-incorrect-hook #'guess-language-function nil t)
+        ;; Depth of 92 to ensure placement after flyspell's PCH
+        (add-hook 'post-command-hook #'guess-language--post-command-h 92 t)
         (advice-add 'flyspell-buffer :around #'guess-language-flyspell-buffer-wrapper))
     (remove-hook 'flyspell-incorrect-hook #'guess-language-function t)
+    (remove-hook 'post-command-hook #'guess-language--post-command-h t)
     (advice-remove 'flyspell-buffer #'guess-language-flyspell-buffer-wrapper)))
 
 (defun guess-language-mark-lines (&optional highlight)
