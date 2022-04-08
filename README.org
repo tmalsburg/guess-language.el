@@ -12,7 +12,10 @@ Emacs minor mode that detects the language of what you're typing.  Automatically
 - Stays out of your way.  Set up once, then forget it exists.
 - Works with documents written in multiple languages.
 
------
+*News:*
+- [2022-04-08 Fri] Added support for displaying current language as color emoji in the mode line (requires Emacs 28.1 or later).  See updated format of ~guess-language-langcodes~.  Old configurations should still work but won’t show color flags.
+
+* What is guess-language?
 
 I write a lot of text in multiple languages and was getting tired of constantly having to switch the dictionary of my spell-checker.  In true Emacs spirit, I decided to dust off my grandpa's parentheses and wrote some code to address this problem.  The result is ~guess-language-mode~, a minor mode for Emacs that guesses the language of the current paragraph and then changes the dictionary of ispell and the language settings of typo-mode (if present).  It also reruns Flyspell on the current paragraph, but only on that paragraph because I want to leave paragraphs in other languages untouched.  Language guessing is triggered when Flyspell detects an unknown word, but only if the paragraph has enough material to allow for robust detection of the language (~ 35 characters).
 
@@ -54,11 +57,11 @@ In this case, use the variable ~guess-language-langcodes~ to tell guess-language
 
 #+BEGIN_SRC elisp
 (setq guess-language-langcodes
-  '((en . ("en_GB" "English"))
-    (de . ("de_CH" "German"))))
+  '((en . ("en_GB" "English" "🇬🇧" "English"))
+    (de . ("de_CH" "German" "🇨🇭" "Swiss German"))))
 #+END_SRC
 
-The key of each entry in this alist is an ISO 639-1 language code.  The first element of the value is the name of the dictionary that should be used (i.e., what you would enter when setting the language via ~M-x ispell-change-dictionary~).  The second element is the name of the language setting that should be used with typo-mode (if present).  If a language is not supported by typo-mode or if you are not using typo-mode, enter ~nil~.
+The key is a symbol specifying the ISO 639-1 code of the language.  The values is a list with four elements.  The first is the name of the dictionary that should be used by the spell-checker (e.g., what you would enter when setting the language with ~ispell-change-dictionary~).  The second element is the name of the language setting that should be used with typo-mode.  If a language is not supported by typo-mode, that value is ~nil~.  The third element is a string for displaying the current language in the mode line.  This could be text or a Unicode flag symbol (displayed as color emoji starting from Emacs 28.1).  The last element is the name of the language for display in the mini buffer.
 
 For a list of all dictionaries available for spell-checking, use the following:
 
@@ -70,27 +73,27 @@ Languages that are currently supported by guess-language-mode:
 
 | Language           | IDO 639-1 code | Default Ispell dictionary | Default typo-mode setting        |
 |--------------------+----------------+---------------------------+----------------------------------|
-| Arabic             | ~ar~           | ar                        |                                  |
-| Czech              | ~cs~           | czech                     | Czech                            |
-| Danish             | ~da~           | dansk                     |                                  |
-| Dutch              | ~nl~           | nederlands                |                                  |
-| English            | ~en~           | en                        | English                          |
-| Esperanto          | ~eo~           | esperanto                 | English                          |
-| Finnish            | ~fi~           | finnish                   | Finnish                          |
-| French             | ~fr~           | francais                  | French                           |
-| German             | ~de~           | de                        | German                           |
-| Italian            | ~it~           | italiano                  | Italian                          |
-| Norwegian          | ~nb~           | norsk                     |                                  |
-| Polish             | ~pl~           | polish                    |                                  |
-| Portuguese         | ~pt~           | portuguese                |                                  |
-| Russian            | ~ru~           | russian                   | Russian                          |
-| Serbian (Cyrillic) | ~sr~           | serbian                   | German (most similar to Serbian) |
-| Serbian (Latin)    | ~sr~           | sr-lat                    | German (most similar to Serbian) |
-| Slovak             | ~sk~           | slovak                    |                                  |
-| Slovenian          | ~sl~           | slovenian                 |                                  |
-| Spanish            | ~es~           | spanish                   |                                  |
-| Swedish            | ~sv~           | svenska                   |                                  |
-| Vietnamese         | ~vi~           | viet                      |                                  |
+| Arabic             | ~ar~             | ar                        |                                  |
+| Czech              | ~cs~             | czech                     | Czech                            |
+| Danish             | ~da~             | dansk                     |                                  |
+| Dutch              | ~nl~             | nederlands                |                                  |
+| English            | ~en~             | en                        | English                          |
+| Esperanto          | ~eo~             | esperanto                 | English                          |
+| Finnish            | ~fi~             | finnish                   | Finnish                          |
+| French             | ~fr~             | francais                  | French                           |
+| German             | ~de~             | de                        | German                           |
+| Italian            | ~it~             | italiano                  | Italian                          |
+| Norwegian          | ~nb~             | norsk                     |                                  |
+| Polish             | ~pl~             | polish                    |                                  |
+| Portuguese         | ~pt~             | portuguese                |                                  |
+| Russian            | ~ru~             | russian                   | Russian                          |
+| Serbian (Cyrillic) | ~sr~             | serbian                   | German (most similar to Serbian) |
+| Serbian (Latin)    | ~sr~             | sr-lat                    | German (most similar to Serbian) |
+| Slovak             | ~sk~             | slovak                    |                                  |
+| Slovenian          | ~sl~             | slovenian                 |                                  |
+| Spanish            | ~es~             | spanish                   |                                  |
+| Swedish            | ~sv~             | svenska                   |                                  |
+| Vietnamese         | ~vi~             | viet                      |                                  |
 
 *** Custom functions to be run when a new language is detected
 
@@ -160,4 +163,10 @@ which LANG was detected.  These are ignored."
 
 ** Notes
 
+<<<<<<< HEAD
 - Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  Since some Cyrillic trigrams transliterate to 4-grams in Latin, we truncated those but as a result have two duplicates, "e n" and "ra ".  Not ideal but the results are probably still robust enough.  Nonetheless, it would be good if someone could compute proper Latin trigrams one day.
+=======
+- Support for Latin Serbian is based on trigrams transliterated from Cyrillic Serbian.  Since some Cyrillic trigrams transliterated to 4-grams in Latin.  We truncated those but as a result have two duplicates (~"e n"~ and ~"ra "~).  Not ideal but results are probably still robust.  It would be good, though, if someone could compute proper Latin trigrams.
+
+
+>>>>>>> 770fe5e (Added support for flags in mode line)

@@ -83,37 +83,41 @@ little material to reliably guess the language."
   "The regular expressions that are used to count trigrams.")
 
 (defcustom guess-language-langcodes
-  '((ar     . ("ar"         nil))
-    (cs     . ("czech"      "Czech"))
-    (da     . ("dansk"      nil))
-    (de     . ("de"         "German"))
-    (en     . ("en"         "English"))
-    (eo     . ("eo"         "English"))
-    (es     . ("spanish"    nil))
-    (fi     . ("finnish"    "Finnish"))
-    (fr     . ("francais"   "French"))
-    (it     . ("italiano"   "Italian"))
-    (nb     . ("norsk"      nil))
-    (nl     . ("nederlands" nil))
-    (pl     . ("polish"     "Polish"))
-    (pt     . ("portuguese" nil))
-    (ru     . ("russian"    "Russian"))
-    (sk     . ("slovak"     nil))
-    (sl     . ("slovenian"  nil))
-    (sr     . ("serbian"    "Serbian"))
-    (sr_LAT . ("sr-lat"     "Serbian"))
-    (sv     . ("svenska"    "Swedish"))
-    (vi     . ("viet"       nil)))
+  '((ar     . ("ar"         nil       "اَلْعَرَبِيَّةُ" "Arabic"))
+    (cs     . ("czech"      "Czech"   "🇨🇿"   "Czech"))
+    (da     . ("dansk"      nil       "🇩🇰"   "Danish"))
+    (de     . ("de"         "German"  "🇩🇪"   "German"))
+    (en     . ("en"         "English" "🇬🇧"   "English"))
+    (eo     . ("eo"         "English" "🟩"   "Esperanto"))
+    (es     . ("spanish"    nil       "🇪🇸"   "Spanish"))
+    (fi     . ("finnish"    "Finnish" "🇫🇮"   "Finnish"))
+    (fr     . ("francais"   "French"  "🇫🇷"   "French"))
+    (it     . ("italiano"   "Italian" "🇮🇹"   "Italian"))
+    (nb     . ("norsk"      nil       "🇳🇴"   "Norsk"))
+    (nl     . ("nederlands" nil       "🇳🇱"   "Dutch"))
+    (pl     . ("polish"     "Polish"  "🇵🇱"   "Polish"))
+    (pt     . ("portuguese" nil       "🇵🇹"   "Portuguese"))
+    (ru     . ("russian"    "Russian" "🇷🇺"   "Russian"))
+    (sk     . ("slovak"     nil       "🇸🇰"   "Slovak"))
+    (sl     . ("slovenian"  nil       "🇸🇮"   "Slovenian"))
+    (sr     . ("serbian"    "Serbian" "🇷🇸"   "Serbian"))
+    (sr_LAT . ("sr-lat"     "Serbian" "🇷🇸"   "Serbian"))
+    (sv     . ("svenska"    "Swedish" "🇸🇪"   "Swedish"))
+    (vi     . ("viet"       nil       "🇻🇳"   "Vietnamese")))
   "Language codes for spell-checker and typo-mode.
 
 The key is a symbol specifying the ISO 639-1 code of the
-language.  The values is a list with two elements.  The first is
+language.  The values is a list with four elements.  The first is
 the name of the dictionary that should be used by the
 spell-checker (e.g., what you would enter when setting the
 language with `ispell-change-dictionary').  The second element is
 the name of the language setting that should be used with
 typo-mode.  If a language is not supported by typo-mode, that
-value is nil."
+value is nil.  The third element is a string for displaying the
+current language in the mode line.  This could be text or a
+Unicode flag symbol (displayed as color emoji starting from Emacs
+28.1).  The last element is the name of the language for display
+in the mini buffer."
   :type '(alist :key-type symbol :value-type list))
 
 (defcustom guess-language-after-detection-functions (list #'guess-language-switch-flyspell-function
@@ -225,7 +229,7 @@ things like changing the keyboard layout or input method."
       (let ((lang (guess-language-region beginning end)))
         (run-hook-with-args 'guess-language-after-detection-functions lang beginning end)
         (setq guess-language-current-language lang)
-        (message (format "Detected language: %s" (caddr (assoc lang guess-language-langcodes))))))))
+        (message (format "Detected language: %s" (nth 4 (assoc lang guess-language-langcodes))))))))
 
 (defun guess-language-function (_beginning _end _doublon)
   "Wrapper for `guess-language' because `flyspell-incorrect-hook'
@@ -305,7 +309,12 @@ correctly."
   ;; The initial value.
   :init-value nil
   ;; The indicator for the mode line.
-  :lighter (:eval (format " (%s)" (or guess-language-current-language "default")))
+  :lighter (:eval (format " %s" (or
+                                 (nth 3 (assq guess-language-current-language guess-language-langcodes))
+                                 ;; Options for users of old configurations:
+                                 (nth 2 (assq guess-language-current-language guess-language-langcodes))
+                                 (nth 1 (assq guess-language-current-language guess-language-langcodes))
+                                 "default")))
   :global nil
   (if guess-language-mode
       (progn
